@@ -552,3 +552,12 @@ myRouteTables_route_table_settings = {
     myRouteTables_route_table_route_table_propagating_vgws = []
   }
 }
+
+myInternetGateways_internet_gateway_settings = {
+  internet_gateway_1 = {
+    myInternetGateways_is_new_vpc                             = true,
+    myInternetGateways_new_vpc_id                             = "vpc_1",
+    myInternetGateways_existing_vpc_id                        = null,
+    myInternetGateways_internet_gateway_internet_gateway_tags = { Name = "myInternetGateway1" }
+  }
+}

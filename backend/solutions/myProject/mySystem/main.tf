@@ -565,3 +565,16 @@ module "myRouteTables" {
   route_table_route_table_tags             = each.value.myRouteTables_route_table_route_table_tags
   route_table_route_table_propagating_vgws = each.value.myRouteTables_route_table_route_table_propagating_vgws
 }
+
+# My Internet Gateways
+module "myInternetGateways" {
+  source = "../../../modules/aws/internet_gateway"
+
+  for_each = var.myInternetGateways_internet_gateway_settings
+  internet_gateway_internet_gateway_vpc_id = (
+    each.value.myInternetGateways_is_new_vpc ?
+    module.myVpcs[each.value.myInternetGateways_new_vpc_id].vpc_id :
+    each.value.myInternetGateways_existing_vpc_id
+  )
+  internet_gateway_internet_gateway_tags = each.value.myInternetGateways_internet_gateway_internet_gateway_tags
+}

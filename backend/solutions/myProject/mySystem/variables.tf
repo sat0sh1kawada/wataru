@@ -256,3 +256,12 @@ variable "myRouteTables_route_table_settings" {
     myRouteTables_route_table_route_table_propagating_vgws = set(string)
   }))
 }
+
+variable "myInternetGateways_internet_gateway_settings" {
+  type = map(object({
+    myInternetGateways_is_new_vpc                             = bool,
+    myInternetGateways_new_vpc_id                             = string,
+    myInternetGateways_existing_vpc_id                        = string,
+    myInternetGateways_internet_gateway_internet_gateway_tags = map(string)
+  }))
+}
