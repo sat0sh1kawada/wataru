@@ -14,16 +14,16 @@ provider "aws" {
 }
 
 provider "databricks" {
-  alias    = "mws"
-  host     = "https://accounts.cloud.databricks.com"
+  alias         = "mws"
+  host          = "https://accounts.cloud.databricks.com"
   client_id     = "ebb32baf-b770-4da9-807d-6ff2f2d1ecb0"
   client_secret = "dose4ddf224f6c372ee47230aa219e9214a2"
   account_id    = "c92415d6-29e6-4584-b2f8-ad3e0d82836d"
 }
 
 provider "databricks" {
-  alias    = "workspace"
-  host     = module.databricks_workspace.workspace.workspace_url
+  alias         = "workspace"
+  host          = module.databricks_workspace.workspace.workspace_url
   client_id     = "ebb32baf-b770-4da9-807d-6ff2f2d1ecb0"
   client_secret = "dose4ddf224f6c372ee47230aa219e9214a2"
 }
@@ -549,4 +549,19 @@ module "myVpcs" {
   vpc_vpc_enable_dns_hostnames                 = each.value.myVpcs_vpc_vpc_enable_dns_hostnames
   vpc_vpc_assign_generated_ipv6_cidr_block     = each.value.myVpcs_vpc_vpc_assign_generated_ipv6_cidr_block
   vpc_vpc_tags                                 = each.value.myVpcs_vpc_vpc_tags
+}
+
+# My Route Tables
+module "myRouteTables" {
+  source = "../../../modules/aws/route_table"
+
+  for_each = var.myRouteTables_route_table_settings
+  route_table_route_table_vpc_id = (
+    each.value.myRouteTables_is_new_route_table ?
+    module.myVpcs[each.value.myRouteTables_new_route_table_id].vpc_id :
+    each.value.myRouteTables_existing_route_table_id
+  )
+  route_table_route_table_route            = each.value.myRouteTables_route_table_route_table_route
+  route_table_route_table_tags             = each.value.myRouteTables_route_table_route_table_tags
+  route_table_route_table_propagating_vgws = each.value.myRouteTables_route_table_route_table_propagating_vgws
 }

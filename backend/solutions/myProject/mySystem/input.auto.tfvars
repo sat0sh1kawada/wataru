@@ -526,17 +526,29 @@ unity_catalog_grants_grants_grant = [{ grants_grant_principal = "Data Engineers"
 
 myVpcs_vpc_settings = {
   vpc_1 = {
-    myVpcs_vpc_vpc_cidr_block = "10.128.0.0/16",
-    myVpcs_vpc_vpc_instance_tenancy = "default",
-    myVpcs_vpc_vpc_ipv4_ipam_pool_id = null,
-    myVpcs_vpc_vpc_ipv4_netmask_length = null,
-    myVpcs_vpc_vpc_ipv6_ipam_pool_id = null,
-    myVpcs_vpc_vpc_ipv6_cidr_block = null,
-    myVpcs_vpc_vpc_ipv6_netmask_length = null,
+    myVpcs_vpc_vpc_cidr_block                           = "10.128.0.0/16",
+    myVpcs_vpc_vpc_instance_tenancy                     = "default",
+    myVpcs_vpc_vpc_ipv4_ipam_pool_id                    = null,
+    myVpcs_vpc_vpc_ipv4_netmask_length                  = null,
+    myVpcs_vpc_vpc_ipv6_ipam_pool_id                    = null,
+    myVpcs_vpc_vpc_ipv6_cidr_block                      = null,
+    myVpcs_vpc_vpc_ipv6_netmask_length                  = null,
     myVpcs_vpc_vpc_ipv6_cidr_block_network_border_group = null,
-    myVpcs_vpc_vpc_enable_dns_support = true,
+    myVpcs_vpc_vpc_enable_dns_support                   = true,
     myVpcs_vpc_vpc_enable_network_address_usage_metrics = null,
-    myVpcs_vpc_vpc_enable_dns_hostnames = true,
-    myVpcs_vpc_vpc_assign_generated_ipv6_cidr_block = null,
-    myVpcs_vpc_vpc_tags = { Name = "myVpc" }
-  }}
+    myVpcs_vpc_vpc_enable_dns_hostnames                 = true,
+    myVpcs_vpc_vpc_assign_generated_ipv6_cidr_block     = null,
+    myVpcs_vpc_vpc_tags                                 = { Name = "myVpc1" }
+  }
+}
+
+myRouteTables_route_table_settings = {
+  route_table_1 = {
+    myRouteTables_is_new_route_table                       = true,
+    myRouteTables_new_route_table_id                       = "vpc_1",
+    myRouteTables_existing_route_table_id                  = null,
+    myRouteTables_route_table_route_table_route            = [],
+    myRouteTables_route_table_route_table_tags             = { Name = "myRouteTable1" }
+    myRouteTables_route_table_route_table_propagating_vgws = []
+  }
+}

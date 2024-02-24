@@ -216,18 +216,43 @@ variable "unity_catalog_grants_grants_grant" {}
 
 variable "myVpcs_vpc_settings" {
   type = map(object({
-    myVpcs_vpc_vpc_cidr_block = string,
-    myVpcs_vpc_vpc_instance_tenancy = string,
-    myVpcs_vpc_vpc_ipv4_ipam_pool_id = string,
-    myVpcs_vpc_vpc_ipv4_netmask_length = number
-    myVpcs_vpc_vpc_ipv6_ipam_pool_id = string,
-    myVpcs_vpc_vpc_ipv6_cidr_block = string,
-    myVpcs_vpc_vpc_ipv6_netmask_length = number,
+    myVpcs_vpc_vpc_cidr_block                           = string,
+    myVpcs_vpc_vpc_instance_tenancy                     = string,
+    myVpcs_vpc_vpc_ipv4_ipam_pool_id                    = string,
+    myVpcs_vpc_vpc_ipv4_netmask_length                  = number
+    myVpcs_vpc_vpc_ipv6_ipam_pool_id                    = string,
+    myVpcs_vpc_vpc_ipv6_cidr_block                      = string,
+    myVpcs_vpc_vpc_ipv6_netmask_length                  = number,
     myVpcs_vpc_vpc_ipv6_cidr_block_network_border_group = string,
-    myVpcs_vpc_vpc_enable_dns_support = bool
+    myVpcs_vpc_vpc_enable_dns_support                   = bool
     myVpcs_vpc_vpc_enable_network_address_usage_metrics = bool,
-    myVpcs_vpc_vpc_enable_dns_hostnames = bool,
-    myVpcs_vpc_vpc_assign_generated_ipv6_cidr_block = bool,
-    myVpcs_vpc_vpc_tags = map(string)
+    myVpcs_vpc_vpc_enable_dns_hostnames                 = bool,
+    myVpcs_vpc_vpc_assign_generated_ipv6_cidr_block     = bool,
+    myVpcs_vpc_vpc_tags                                 = map(string)
+  }))
+}
+
+variable "myRouteTables_route_table_settings" {
+  type = map(object({
+    myRouteTables_is_new_route_table      = bool,
+    myRouteTables_new_route_table_id      = string,
+    myRouteTables_existing_route_table_id = string,
+    myRouteTables_route_table_route_table_route = list(object({
+      route_table_cidr_block                 = string
+      route_table_ipv6_cidr_block            = string
+      route_table_destination_prefix_list_id = string
+      route_table_carrier_gateway_id         = string
+      route_table_core_network_arn           = string
+      route_table_egress_only_gateway_id     = string
+      route_table_gateway_id                 = string
+      route_table_local_gateway_id           = string
+      route_table_nat_gateway_id             = string
+      route_table_network_interface_id       = string
+      route_table_transit_gateway_id         = string
+      route_table_vpc_endpoint_id            = string
+      route_table_vpc_peering_connection_id  = string
+    }))
+    myRouteTables_route_table_route_table_tags             = map(string)
+    myRouteTables_route_table_route_table_propagating_vgws = set(string)
   }))
 }

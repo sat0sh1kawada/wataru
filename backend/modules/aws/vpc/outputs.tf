@@ -1,7 +1,7 @@
 # vpc module
 # outputs.tf
-output "vpc" {
-  value = module.vpc.vpc
+output "vpc_id" {
+  value = module.vpc.vpc_id
 }
 /*
 output "internet_gateway" {
