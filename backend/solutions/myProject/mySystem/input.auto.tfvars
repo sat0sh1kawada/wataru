@@ -561,3 +561,17 @@ myInternetGateways_internet_gateway_settings = {
     myInternetGateways_internet_gateway_internet_gateway_tags = { Name = "myInternetGateway1" }
   }
 }
+
+myEIPs_eip_settings = {
+  eip_1 = {
+    myEIPs_eip_eip_address                   = null,
+    myEIPs_eip_eip_associate_with_private_ip = null,
+    myEIPs_eip_eip_customer_owned_ipv4_pool  = null,
+    myEIPs_eip_eip_domain                    = "vpc",
+    myEIPs_eip_eip_instance                  = null,
+    myEIPs_eip_eip_network_border_group      = null,
+    myEIPs_eip_eip_network_interface         = null,
+    myEIPs_eip_eip_public_ipv4_pool          = null,
+    myEIPs_eip_eip_tags                      = { Name = "myEIP1" }
+  }
+}

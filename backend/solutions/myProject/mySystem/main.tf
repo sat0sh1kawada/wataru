@@ -578,3 +578,19 @@ module "myInternetGateways" {
   )
   internet_gateway_internet_gateway_tags = each.value.myInternetGateways_internet_gateway_internet_gateway_tags
 }
+
+# My EIPs
+module "myEIPs" {
+  source = "../../../modules/aws/eip"
+
+  for_each                          = var.myEIPs_eip_settings
+  eip_eip_address                   = each.value.myEIPs_eip_eip_address
+  eip_eip_associate_with_private_ip = each.value.myEIPs_eip_eip_associate_with_private_ip
+  eip_eip_customer_owned_ipv4_pool  = each.value.myEIPs_eip_eip_customer_owned_ipv4_pool
+  eip_eip_domain                    = each.value.myEIPs_eip_eip_domain
+  eip_eip_instance                  = each.value.myEIPs_eip_eip_instance
+  eip_eip_network_border_group      = each.value.myEIPs_eip_eip_network_border_group
+  eip_eip_network_interface         = each.value.myEIPs_eip_eip_network_interface
+  eip_eip_public_ipv4_pool          = each.value.myEIPs_eip_eip_public_ipv4_pool
+  eip_eip_tags                      = each.value.myEIPs_eip_eip_tags
+}

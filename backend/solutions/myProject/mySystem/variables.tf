@@ -265,3 +265,17 @@ variable "myInternetGateways_internet_gateway_settings" {
     myInternetGateways_internet_gateway_internet_gateway_tags = map(string)
   }))
 }
+
+variable "myEIPs_eip_settings" {
+  type = map(object({
+    myEIPs_eip_eip_address                   = string
+    myEIPs_eip_eip_associate_with_private_ip = string
+    myEIPs_eip_eip_customer_owned_ipv4_pool  = string
+    myEIPs_eip_eip_domain                    = string
+    myEIPs_eip_eip_instance                  = string
+    myEIPs_eip_eip_network_border_group      = string
+    myEIPs_eip_eip_network_interface         = string
+    myEIPs_eip_eip_public_ipv4_pool          = string
+    myEIPs_eip_eip_tags                      = map(string)
+  }))
+}
