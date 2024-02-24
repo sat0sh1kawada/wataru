@@ -1,4 +1,7 @@
-aws_region = "ap-northeast-1"
+aws_region               = "ap-northeast-1"
+databricks_account_id    = "c92415d6-29e6-4584-b2f8-ad3e0d82836d"
+databricks_client_id     = "ebb32baf-b770-4da9-807d-6ff2f2d1ecb0"
+databricks_client_secret = "dose4ddf224f6c372ee47230aa219e9214a2"
 
 iam_iam_group_name = "analyze-group"
 iam_iam_group_path = null
@@ -250,11 +253,6 @@ glue_glue_crawler_tags                   = null
 
 vpc_vpc_class = "New"
 vpc_vpc_id    = null
-
-databricks_username = "ihsotas@adawak.net"
-databricks_password = "!S@t0sh1!"
-
-databricks_account_id = "c92415d6-29e6-4584-b2f8-ad3e0d82836d"
 
 cross_account_role_iam_role_description                     = null
 cross_account_role_iam_role_force_detach_policies           = null
@@ -693,5 +691,14 @@ mySubnets_subnet_settings = {
     mySubnets_subnet_subnet_private_dns_hostname_type_on_launch            = null,
     mySubnets_subnet_subnet_tags                                           = { Name = "mySubnet3" },
     mySubnets_subnet_route_table_association_route_table_id                = "route_table_2"
+  }
+}
+
+myMwsCredentials_mws_credentials_settings = {
+  mws_credentials_settings_1 = {
+    myMwsCredentials_mws_credentials_mws_credentials_credentials_name = "myMwsCredentials1"
+  },
+  mws_credentials_settings_2 = {
+    myMwsCredentials_mws_credentials_mws_credentials_credentials_name = "myMwsCredentials2"
   }
 }

@@ -1,4 +1,15 @@
-variable "aws_region" {}
+variable "aws_region" {
+  type = string
+}
+variable "databricks_account_id" {
+  type = string
+}
+variable "databricks_client_id" {
+  type = string
+}
+variable "databricks_client_secret" {
+  type = string
+}
 
 variable "iam_iam_group_name" {}
 variable "iam_iam_group_path" {}
@@ -119,12 +130,6 @@ variable "glue_glue_crawler_schedule" {}
 variable "glue_glue_crawler_security_configuration" {}
 variable "glue_glue_crawler_table_prefix" {}
 variable "glue_glue_crawler_tags" {}
-
-variable "databricks_username" {}
-variable "databricks_password" {}
-
-variable "databricks_account_id" {}
-
 variable "cross_account_role_iam_role_description" {}
 variable "cross_account_role_iam_role_force_detach_policies" {}
 variable "cross_account_role_iam_role_inline_policy" {}
@@ -332,5 +337,11 @@ variable "mySubnets_subnet_settings" {
     mySubnets_subnet_subnet_private_dns_hostname_type_on_launch            = string
     mySubnets_subnet_subnet_tags                                           = map(string)
     mySubnets_subnet_route_table_association_route_table_id                = string
+  }))
+}
+
+variable "myMwsCredentials_mws_credentials_settings" {
+  type = map(object({
+    myMwsCredentials_mws_credentials_mws_credentials_credentials_name = string
   }))
 }

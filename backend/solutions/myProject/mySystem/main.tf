@@ -16,16 +16,16 @@ provider "aws" {
 provider "databricks" {
   alias         = "mws"
   host          = "https://accounts.cloud.databricks.com"
-  client_id     = "ebb32baf-b770-4da9-807d-6ff2f2d1ecb0"
-  client_secret = "dose4ddf224f6c372ee47230aa219e9214a2"
-  account_id    = "c92415d6-29e6-4584-b2f8-ad3e0d82836d"
+  account_id    = var.databricks_account_id
+  client_id     = var.databricks_client_id
+  client_secret = var.databricks_client_secret
 }
 
 provider "databricks" {
   alias         = "workspace"
   host          = module.databricks_workspace.workspace.workspace_url
-  client_id     = "ebb32baf-b770-4da9-807d-6ff2f2d1ecb0"
-  client_secret = "dose4ddf224f6c372ee47230aa219e9214a2"
+  client_id     = var.databricks_client_id
+  client_secret = var.databricks_client_secret
 }
 
 /*
@@ -666,4 +666,13 @@ module "mySubnets" {
   subnet_subnet_private_dns_hostname_type_on_launch            = each.value.mySubnets_subnet_subnet_private_dns_hostname_type_on_launch
   subnet_subnet_tags                                           = each.value.mySubnets_subnet_subnet_tags
   subnet_route_table_association_route_table_id                = module.myRouteTables[each.value.mySubnets_subnet_route_table_association_route_table_id].route_table_id
+}
+
+# My Mws Credentials
+module "myMwsCredentials" {
+  source = "../../../modules/aws/mws_credentials"
+
+  for_each                                         = var.myMwsCredentials_mws_credentials_settings
+  aws_assume_role_policy_external_id               = var.databricks_account_id
+  mws_credentials_mws_credentials_credentials_name = each.value.myMwsCredentials_mws_credentials_mws_credentials_credentials_name
 }
