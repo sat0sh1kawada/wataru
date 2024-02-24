@@ -594,3 +594,76 @@ module "myEIPs" {
   eip_eip_public_ipv4_pool          = each.value.myEIPs_eip_eip_public_ipv4_pool
   eip_eip_tags                      = each.value.myEIPs_eip_eip_tags
 }
+
+# My Nat Gateways
+module "myNatGateways" {
+  source = "../../../modules/aws/nat_gateway"
+
+  for_each                          = var.myNatGateways_nat_gateway_settings
+  nat_gateway_nat_gateway_subnet_id = module.mySubnets[each.value.myNatGateways_nat_gateway_nat_gateway_subnet_id].subnet_id
+  nat_gateway_nat_gateway_allocation_id = (
+    each.value.myNatGateways_nat_gateway_nat_gateway_allocation_id != null ?
+    module.myEIPs[each.value.myNatGateways_nat_gateway_nat_gateway_allocation_id].eip_id :
+    null
+  )
+  nat_gateway_nat_gateway_connectivity_type                  = each.value.myNatGateways_nat_gateway_nat_gateway_connectivity_type
+  nat_gateway_nat_gateway_private_ip                         = each.value.myNatGateways_nat_gateway_nat_gateway_private_ip
+  nat_gateway_nat_gateway_secondary_allocation_ids           = each.value.myNatGateways_nat_gateway_nat_gateway_secondary_allocation_ids
+  nat_gateway_nat_gateway_secondary_private_ip_address_count = each.value.myNatGateways_nat_gateway_nat_gateway_secondary_private_ip_address_count
+  nat_gateway_nat_gateway_secondary_private_ip_addresses     = each.value.myNatGateways_nat_gateway_nat_gateway_secondary_private_ip_addresses
+  nat_gateway_nat_gateway_tags                               = each.value.myNatGateways_nat_gateway_nat_gateway_tags
+}
+
+# My Routes
+module "myRoutes" {
+  source = "../../../modules/aws/route"
+
+  for_each                                = var.myRoutes_route_settings
+  route_route_route_table_id              = module.myRouteTables[each.value.myRoutes_route_route_route_table_id].route_table_id
+  route_route_destination_cidr_block      = each.value.myRoutes_route_route_destination_cidr_block
+  route_route_destination_ipv6_cidr_block = each.value.myRoutes_route_route_destination_ipv6_cidr_block
+  route_route_destination_prefix_list_id  = each.value.myRoutes_route_route_destination_prefix_list_id
+  route_route_carrier_gateway_id          = each.value.myRoutes_route_route_carrier_gateway_id
+  route_route_core_network_arn            = each.value.myRoutes_route_route_core_network_arn
+  route_route_egress_only_gateway_id      = each.value.myRoutes_route_route_egress_only_gateway_id
+  route_route_gateway_id = (
+    each.value.myRoutes_route_route_gateway_id != null ?
+    module.myInternetGateways[each.value.myRoutes_route_route_gateway_id].internet_gateway_id :
+    null
+  )
+  route_route_nat_gateway_id = (
+    each.value.myRoutes_route_route_nat_gateway_id != null ?
+    module.myNatGateways[each.value.myRoutes_route_route_nat_gateway_id].nat_gateway_id :
+    null
+  )
+  route_route_local_gateway_id          = each.value.myRoutes_route_route_local_gateway_id
+  route_route_network_interface_id      = each.value.myRoutes_route_route_network_interface_id
+  route_route_transit_gateway_id        = each.value.myRoutes_route_route_transit_gateway_id
+  route_route_vpc_endpoint_id           = each.value.myRoutes_route_route_vpc_endpoint_id
+  route_route_vpc_peering_connection_id = each.value.myRoutes_route_route_vpc_peering_connection_id
+}
+
+# My Subnets
+module "mySubnets" {
+  source = "../../../modules/aws/subnet"
+
+  for_each                                                     = var.mySubnets_subnet_settings
+  subnet_subnet_vpc_id                                         = module.myVpcs[each.value.mySubnets_subnet_subnet_vpc_id].vpc_id
+  subnet_subnet_assign_ipv6_address_on_creation                = each.value.mySubnets_subnet_subnet_assign_ipv6_address_on_creation
+  subnet_subnet_availability_zone                              = each.value.mySubnets_subnet_subnet_availability_zone
+  subnet_subnet_availability_zone_id                           = each.value.mySubnets_subnet_subnet_availability_zone_id
+  subnet_subnet_cidr_block                                     = each.value.mySubnets_subnet_subnet_cidr_block
+  subnet_subnet_customer_owned_ipv4_pool                       = each.value.mySubnets_subnet_subnet_customer_owned_ipv4_pool
+  subnet_subnet_enable_dns64                                   = each.value.mySubnets_subnet_subnet_enable_dns64
+  subnet_subnet_enable_lni_at_device_index                     = each.value.mySubnets_subnet_subnet_enable_lni_at_device_index
+  subnet_subnet_enable_resource_name_dns_aaaa_record_on_launch = each.value.mySubnets_subnet_subnet_enable_resource_name_dns_aaaa_record_on_launch
+  subnet_subnet_enable_resource_name_dns_a_record_on_launch    = each.value.mySubnets_subnet_subnet_enable_resource_name_dns_a_record_on_launch
+  subnet_subnet_ipv6_cidr_block                                = each.value.mySubnets_subnet_subnet_ipv6_cidr_block
+  subnet_subnet_ipv6_native                                    = each.value.mySubnets_subnet_subnet_ipv6_native
+  subnet_subnet_map_customer_owned_ip_on_launch                = each.value.mySubnets_subnet_subnet_map_customer_owned_ip_on_launch
+  subnet_subnet_map_public_ip_on_launch                        = each.value.mySubnets_subnet_subnet_map_public_ip_on_launch
+  subnet_subnet_outpost_arn                                    = each.value.mySubnets_subnet_subnet_outpost_arn
+  subnet_subnet_private_dns_hostname_type_on_launch            = each.value.mySubnets_subnet_subnet_private_dns_hostname_type_on_launch
+  subnet_subnet_tags                                           = each.value.mySubnets_subnet_subnet_tags
+  subnet_route_table_association_route_table_id                = module.myRouteTables[each.value.mySubnets_subnet_route_table_association_route_table_id].route_table_id
+}

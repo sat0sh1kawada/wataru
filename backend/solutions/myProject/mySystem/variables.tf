@@ -279,3 +279,58 @@ variable "myEIPs_eip_settings" {
     myEIPs_eip_eip_tags                      = map(string)
   }))
 }
+
+variable "myNatGateways_nat_gateway_settings" {
+  type = map(object({
+    myNatGateways_nat_gateway_nat_gateway_subnet_id                          = string
+    myNatGateways_nat_gateway_nat_gateway_allocation_id                      = string
+    myNatGateways_nat_gateway_nat_gateway_connectivity_type                  = string
+    myNatGateways_nat_gateway_nat_gateway_private_ip                         = string
+    myNatGateways_nat_gateway_nat_gateway_secondary_allocation_ids           = set(string)
+    myNatGateways_nat_gateway_nat_gateway_secondary_private_ip_address_count = number
+    myNatGateways_nat_gateway_nat_gateway_secondary_private_ip_addresses     = set(string)
+    myNatGateways_nat_gateway_nat_gateway_tags                               = map(string)
+  }))
+}
+
+variable "myRoutes_route_settings" {
+  type = map(object({
+    myRoutes_route_route_route_table_id              = string
+    myRoutes_route_route_destination_cidr_block      = string
+    myRoutes_route_route_destination_ipv6_cidr_block = string
+    myRoutes_route_route_destination_prefix_list_id  = string
+    myRoutes_route_route_carrier_gateway_id          = string
+    myRoutes_route_route_core_network_arn            = string
+    myRoutes_route_route_egress_only_gateway_id      = string
+    myRoutes_route_route_gateway_id                  = string
+    myRoutes_route_route_nat_gateway_id              = string
+    myRoutes_route_route_local_gateway_id            = string
+    myRoutes_route_route_network_interface_id        = string
+    myRoutes_route_route_transit_gateway_id          = string
+    myRoutes_route_route_vpc_endpoint_id             = string
+    myRoutes_route_route_vpc_peering_connection_id   = string
+  }))
+}
+
+variable "mySubnets_subnet_settings" {
+  type = map(object({
+    mySubnets_subnet_subnet_vpc_id                                         = string
+    mySubnets_subnet_subnet_assign_ipv6_address_on_creation                = bool
+    mySubnets_subnet_subnet_availability_zone                              = string
+    mySubnets_subnet_subnet_availability_zone_id                           = string
+    mySubnets_subnet_subnet_cidr_block                                     = string
+    mySubnets_subnet_subnet_customer_owned_ipv4_pool                       = string
+    mySubnets_subnet_subnet_enable_dns64                                   = bool
+    mySubnets_subnet_subnet_enable_lni_at_device_index                     = number
+    mySubnets_subnet_subnet_enable_resource_name_dns_aaaa_record_on_launch = bool
+    mySubnets_subnet_subnet_enable_resource_name_dns_a_record_on_launch    = bool
+    mySubnets_subnet_subnet_ipv6_cidr_block                                = string
+    mySubnets_subnet_subnet_ipv6_native                                    = string
+    mySubnets_subnet_subnet_map_customer_owned_ip_on_launch                = bool
+    mySubnets_subnet_subnet_map_public_ip_on_launch                        = bool
+    mySubnets_subnet_subnet_outpost_arn                                    = string
+    mySubnets_subnet_subnet_private_dns_hostname_type_on_launch            = string
+    mySubnets_subnet_subnet_tags                                           = map(string)
+    mySubnets_subnet_route_table_association_route_table_id                = string
+  }))
+}

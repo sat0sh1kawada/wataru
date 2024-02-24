@@ -549,8 +549,17 @@ myRouteTables_route_table_settings = {
     myRouteTables_existing_route_table_id                  = null,
     myRouteTables_route_table_route_table_route            = [],
     myRouteTables_route_table_route_table_tags             = { Name = "myRouteTable1" }
-    myRouteTables_route_table_route_table_propagating_vgws = []
-  }
+    myRouteTables_route_table_route_table_propagating_vgws = null
+  },
+  route_table_2 = {
+    myRouteTables_is_new_route_table                       = true,
+    myRouteTables_new_route_table_id                       = "vpc_1",
+    myRouteTables_existing_route_table_id                  = null,
+    myRouteTables_route_table_route_table_route            = [],
+    myRouteTables_route_table_route_table_tags             = { Name = "myRouteTable2" }
+    myRouteTables_route_table_route_table_propagating_vgws = null
+  },
+
 }
 
 myInternetGateways_internet_gateway_settings = {
@@ -573,5 +582,116 @@ myEIPs_eip_settings = {
     myEIPs_eip_eip_network_interface         = null,
     myEIPs_eip_eip_public_ipv4_pool          = null,
     myEIPs_eip_eip_tags                      = { Name = "myEIP1" }
+  }
+}
+
+myNatGateways_nat_gateway_settings = {
+  nat_gateway_1 = {
+    myNatGateways_nat_gateway_nat_gateway_subnet_id                          = "subnet_1"
+    myNatGateways_nat_gateway_nat_gateway_allocation_id                      = "eip_1"
+    myNatGateways_nat_gateway_nat_gateway_connectivity_type                  = null
+    myNatGateways_nat_gateway_nat_gateway_private_ip                         = null
+    myNatGateways_nat_gateway_nat_gateway_secondary_allocation_ids           = null
+    myNatGateways_nat_gateway_nat_gateway_secondary_private_ip_address_count = null
+    myNatGateways_nat_gateway_nat_gateway_secondary_private_ip_addresses     = null
+    myNatGateways_nat_gateway_nat_gateway_tags                               = { Name = "myNatGateway1" }
+  }
+}
+
+myRoutes_route_settings = {
+  route_1 = {
+    myRoutes_route_route_route_table_id              = "route_table_1"
+    myRoutes_route_route_destination_cidr_block      = "0.0.0.0/0"
+    myRoutes_route_route_destination_ipv6_cidr_block = null
+    myRoutes_route_route_destination_prefix_list_id  = null
+    myRoutes_route_route_carrier_gateway_id          = null
+    myRoutes_route_route_core_network_arn            = null
+    myRoutes_route_route_egress_only_gateway_id      = null
+    myRoutes_route_route_gateway_id                  = "internet_gateway_1"
+    myRoutes_route_route_nat_gateway_id              = null
+    myRoutes_route_route_local_gateway_id            = null
+    myRoutes_route_route_network_interface_id        = null
+    myRoutes_route_route_transit_gateway_id          = null
+    myRoutes_route_route_vpc_endpoint_id             = null
+    myRoutes_route_route_vpc_peering_connection_id   = null
+  },
+  route_2 = {
+    myRoutes_route_route_route_table_id              = "route_table_2"
+    myRoutes_route_route_destination_cidr_block      = "0.0.0.0/0"
+    myRoutes_route_route_destination_ipv6_cidr_block = null
+    myRoutes_route_route_destination_prefix_list_id  = null
+    myRoutes_route_route_carrier_gateway_id          = null
+    myRoutes_route_route_core_network_arn            = null
+    myRoutes_route_route_egress_only_gateway_id      = null
+    myRoutes_route_route_gateway_id                  = null
+    myRoutes_route_route_nat_gateway_id              = "nat_gateway_1"
+    myRoutes_route_route_local_gateway_id            = null
+    myRoutes_route_route_network_interface_id        = null
+    myRoutes_route_route_transit_gateway_id          = null
+    myRoutes_route_route_vpc_endpoint_id             = null
+    myRoutes_route_route_vpc_peering_connection_id   = null
+  },
+}
+
+mySubnets_subnet_settings = {
+  subnet_1 = {
+    mySubnets_subnet_subnet_vpc_id                                         = "vpc_1",
+    mySubnets_subnet_subnet_assign_ipv6_address_on_creation                = null,
+    mySubnets_subnet_subnet_availability_zone                              = "ap-northeast-1a",
+    mySubnets_subnet_subnet_availability_zone_id                           = null,
+    mySubnets_subnet_subnet_cidr_block                                     = "10.128.0.0/24",
+    mySubnets_subnet_subnet_customer_owned_ipv4_pool                       = null,
+    mySubnets_subnet_subnet_enable_dns64                                   = null,
+    mySubnets_subnet_subnet_enable_lni_at_device_index                     = null,
+    mySubnets_subnet_subnet_enable_resource_name_dns_aaaa_record_on_launch = null,
+    mySubnets_subnet_subnet_enable_resource_name_dns_a_record_on_launch    = null,
+    mySubnets_subnet_subnet_ipv6_cidr_block                                = null,
+    mySubnets_subnet_subnet_ipv6_native                                    = null,
+    mySubnets_subnet_subnet_map_customer_owned_ip_on_launch                = null,
+    mySubnets_subnet_subnet_map_public_ip_on_launch                        = null,
+    mySubnets_subnet_subnet_outpost_arn                                    = null,
+    mySubnets_subnet_subnet_private_dns_hostname_type_on_launch            = null,
+    mySubnets_subnet_subnet_tags                                           = { Name = "mySubnet1" },
+    mySubnets_subnet_route_table_association_route_table_id                = "route_table_1"
+  },
+  subnet_2 = {
+    mySubnets_subnet_subnet_vpc_id                                         = "vpc_1",
+    mySubnets_subnet_subnet_assign_ipv6_address_on_creation                = null,
+    mySubnets_subnet_subnet_availability_zone                              = "ap-northeast-1c",
+    mySubnets_subnet_subnet_availability_zone_id                           = null,
+    mySubnets_subnet_subnet_cidr_block                                     = "10.128.1.0/24",
+    mySubnets_subnet_subnet_customer_owned_ipv4_pool                       = null,
+    mySubnets_subnet_subnet_enable_dns64                                   = null,
+    mySubnets_subnet_subnet_enable_lni_at_device_index                     = null,
+    mySubnets_subnet_subnet_enable_resource_name_dns_aaaa_record_on_launch = null,
+    mySubnets_subnet_subnet_enable_resource_name_dns_a_record_on_launch    = null,
+    mySubnets_subnet_subnet_ipv6_cidr_block                                = null,
+    mySubnets_subnet_subnet_ipv6_native                                    = null,
+    mySubnets_subnet_subnet_map_customer_owned_ip_on_launch                = null,
+    mySubnets_subnet_subnet_map_public_ip_on_launch                        = null,
+    mySubnets_subnet_subnet_outpost_arn                                    = null,
+    mySubnets_subnet_subnet_private_dns_hostname_type_on_launch            = null,
+    mySubnets_subnet_subnet_tags                                           = { Name = "mySubnet2" },
+    mySubnets_subnet_route_table_association_route_table_id                = "route_table_2"
+  },
+  subnet_3 = {
+    mySubnets_subnet_subnet_vpc_id                                         = "vpc_1",
+    mySubnets_subnet_subnet_assign_ipv6_address_on_creation                = null,
+    mySubnets_subnet_subnet_availability_zone                              = "ap-northeast-1d",
+    mySubnets_subnet_subnet_availability_zone_id                           = null,
+    mySubnets_subnet_subnet_cidr_block                                     = "10.128.2.0/24",
+    mySubnets_subnet_subnet_customer_owned_ipv4_pool                       = null,
+    mySubnets_subnet_subnet_enable_dns64                                   = null,
+    mySubnets_subnet_subnet_enable_lni_at_device_index                     = null,
+    mySubnets_subnet_subnet_enable_resource_name_dns_aaaa_record_on_launch = null,
+    mySubnets_subnet_subnet_enable_resource_name_dns_a_record_on_launch    = null,
+    mySubnets_subnet_subnet_ipv6_cidr_block                                = null,
+    mySubnets_subnet_subnet_ipv6_native                                    = null,
+    mySubnets_subnet_subnet_map_customer_owned_ip_on_launch                = null,
+    mySubnets_subnet_subnet_map_public_ip_on_launch                        = null,
+    mySubnets_subnet_subnet_outpost_arn                                    = null,
+    mySubnets_subnet_subnet_private_dns_hostname_type_on_launch            = null,
+    mySubnets_subnet_subnet_tags                                           = { Name = "mySubnet3" },
+    mySubnets_subnet_route_table_association_route_table_id                = "route_table_2"
   }
 }
