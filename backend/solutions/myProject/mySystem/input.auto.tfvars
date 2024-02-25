@@ -794,5 +794,14 @@ myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_settings = {
     myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_tags                         = { Name = "myVpcSecurityGroupIngressRule2" }
     myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_to_port                      = 65535
   }
+}
 
+myMwsNetworks_mws_networks_settings = {
+  mws_networks_1 = {
+    myMwsNetworks_mws_networks_mws_networks_network_name       = "myMwsNetworks1"
+    myMwsNetworks_mws_networks_mws_networks_vpc_id             = "vpc_1"
+    myMwsNetworks_mws_networks_mws_networks_subnet_ids         = ["subnet_2", "subnet_3"]
+    myMwsNetworks_mws_networks_mws_networks_security_group_ids = ["security_group_1"]
+    myMwsNetworks_mws_networks_mws_networks_vpc_endpoints      = []
+  }
 }

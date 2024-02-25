@@ -711,3 +711,15 @@ module "myVpcSecurityGroupIngressRules" {
   vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_to_port                      = each.value.myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_to_port
 }
 
+# My Mws Networks
+module "myMwsNetworks" {
+  source = "../../../modules/aws/mws_networks"
+
+  for_each                                     = var.myMwsNetworks_mws_networks_settings
+  mws_networks_mws_networks_account_id         = var.databricks_account_id
+  mws_networks_mws_networks_network_name       = each.value.myMwsNetworks_mws_networks_mws_networks_network_name
+  mws_networks_mws_networks_vpc_id             = module.myVpcs[each.value.myMwsNetworks_mws_networks_mws_networks_vpc_id].vpc_id
+  mws_networks_mws_networks_subnet_ids         = [for s in each.value.myMwsNetworks_mws_networks_mws_networks_subnet_ids : module.mySubnets[s].subnet_id]
+  mws_networks_mws_networks_security_group_ids = [for s in each.value.myMwsNetworks_mws_networks_mws_networks_security_group_ids : module.mySecurityGroups[s].security_group_id]
+  mws_networks_mws_networks_vpc_endpoints      = each.value.myMwsNetworks_mws_networks_mws_networks_vpc_endpoints
+}

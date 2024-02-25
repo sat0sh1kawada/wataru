@@ -408,3 +408,16 @@ variable "myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_setting
     myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_to_port                      = number
   }))
 }
+
+variable "myMwsNetworks_mws_networks_settings" {
+  type = map(object({
+    myMwsNetworks_mws_networks_mws_networks_network_name       = string
+    myMwsNetworks_mws_networks_mws_networks_vpc_id             = string
+    myMwsNetworks_mws_networks_mws_networks_subnet_ids         = set(string)
+    myMwsNetworks_mws_networks_mws_networks_security_group_ids = set(string)
+    myMwsNetworks_mws_networks_mws_networks_vpc_endpoints = list(object({
+      mws_networks_vpc_endpoints_dataplane_relay = set(string)
+      mws_networks_vpc_endpoints_rest_api        = set(string)
+    }))
+  }))
+}
