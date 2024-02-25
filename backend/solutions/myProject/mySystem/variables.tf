@@ -1,6 +1,9 @@
 variable "aws_region" {
   type = string
 }
+variable "databricks_region" {
+  type = string
+}
 variable "databricks_account_id" {
   type = string
 }
@@ -450,5 +453,18 @@ variable "myMwsStorageConfigurations_mws_storage_configurations_settings" {
   type = map(object({
     myMwsStorageConfigurations_mws_storage_configurations_mws_storage_configurations_storage_configuration_name = string
     myMwsStorageConfigurations_mws_storage_configurations_mws_storage_configurations_bucket_name                = string
+  }))
+}
+
+variable "myMwsWorkspaces_mws_workspaces_settings" {
+  type = map(object({
+    myMwsWorkspaces_mws_workspaces_mws_workspaces_workspace_name                           = string
+    myMwsWorkspaces_mws_workspaces_mws_workspaces_credentials_id                           = string
+    myMwsWorkspaces_mws_workspaces_mws_workspaces_custom_tags                              = map(string)
+    myMwsWorkspaces_mws_workspaces_mws_workspaces_deployment_name                          = string
+    myMwsWorkspaces_mws_workspaces_mws_workspaces_managed_services_customer_managed_key_id = string
+    myMwsWorkspaces_mws_workspaces_mws_workspaces_network_id                               = string
+    myMwsWorkspaces_mws_workspaces_mws_workspaces_private_access_settings_id               = string
+    myMwsWorkspaces_mws_workspaces_mws_workspaces_storage_configuration_id                 = string
   }))
 }

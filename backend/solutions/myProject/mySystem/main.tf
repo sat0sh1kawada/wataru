@@ -659,6 +659,9 @@ module "mySubnets" {
 # My Mws Credentials
 module "myMwsCredentials" {
   source = "../../../modules/aws/mws_credentials"
+  providers = {
+    databricks = databricks.mws
+  }
 
   for_each                                         = var.myMwsCredentials_mws_credentials_settings
   aws_assume_role_policy_external_id               = var.databricks_account_id
@@ -717,6 +720,9 @@ module "myVpcSecurityGroupIngressRules" {
 # My Mws Networks
 module "myMwsNetworks" {
   source = "../../../modules/aws/mws_networks"
+  providers = {
+    databricks = databricks.mws
+  }
 
   for_each                                     = var.myMwsNetworks_mws_networks_settings
   mws_networks_mws_networks_account_id         = var.databricks_account_id
@@ -753,9 +759,31 @@ module "myS3Buckets" {
 # My Mws Storage Configurations
 module "myMwsStorageConfigurations" {
   source = "../../../modules/aws/mws_storage_configurations"
+  providers = {
+    databricks = databricks.mws
+  }
 
   for_each                                                                         = var.myMwsStorageConfigurations_mws_storage_configurations_settings
   mws_storage_configurations_mws_storage_configurations_account_id                 = var.databricks_account_id
   mws_storage_configurations_mws_storage_configurations_bucket_name                = module.myS3Buckets[each.value.myMwsStorageConfigurations_mws_storage_configurations_mws_storage_configurations_bucket_name].s3_bucket_bucket
   mws_storage_configurations_mws_storage_configurations_storage_configuration_name = each.value.myMwsStorageConfigurations_mws_storage_configurations_mws_storage_configurations_storage_configuration_name
+}
+
+module "myMwsWorkspaces" {
+  source = "../../../modules/aws/mws_workspaces"
+  providers = {
+    databricks = databricks.mws
+  }
+
+  for_each                                                               = var.myMwsWorkspaces_mws_workspaces_settings
+  mws_workspaces_mws_workspaces_account_id                               = var.databricks_account_id
+  mws_workspaces_mws_workspaces_workspace_name                           = each.value.myMwsWorkspaces_mws_workspaces_mws_workspaces_workspace_name
+  mws_workspaces_mws_workspaces_aws_region                               = var.databricks_region
+  mws_workspaces_mws_workspaces_credentials_id                           = module.myMwsCredentials[each.value.myMwsWorkspaces_mws_workspaces_mws_workspaces_credentials_id].mws_credentials_credentials_id
+  mws_workspaces_mws_workspaces_custom_tags                              = each.value.myMwsWorkspaces_mws_workspaces_mws_workspaces_custom_tags
+  mws_workspaces_mws_workspaces_deployment_name                          = each.value.myMwsWorkspaces_mws_workspaces_mws_workspaces_deployment_name
+  mws_workspaces_mws_workspaces_managed_services_customer_managed_key_id = each.value.myMwsWorkspaces_mws_workspaces_mws_workspaces_managed_services_customer_managed_key_id
+  mws_workspaces_mws_workspaces_network_id                               = module.myMwsNetworks[each.value.myMwsWorkspaces_mws_workspaces_mws_workspaces_network_id].mws_networks_network_id
+  mws_workspaces_mws_workspaces_private_access_settings_id               = each.value.myMwsWorkspaces_mws_workspaces_mws_workspaces_private_access_settings_id
+  mws_workspaces_mws_workspaces_storage_configuration_id                 = module.myMwsStorageConfigurations[each.value.myMwsWorkspaces_mws_workspaces_mws_workspaces_storage_configuration_id].mws_storage_configurations_storage_configuration_id
 }

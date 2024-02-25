@@ -1,7 +1,8 @@
 aws_region               = "ap-northeast-1"
+databricks_region        = "ap-northeast-1"
 databricks_account_id    = "c92415d6-29e6-4584-b2f8-ad3e0d82836d"
 databricks_client_id     = "ebb32baf-b770-4da9-807d-6ff2f2d1ecb0"
-databricks_client_secret = "dose4ddf224f6c372ee47230aa219e9214a2"
+databricks_client_secret = "dosec75c31b469b19d73e6e1c0c5f574d328"
 
 iam_iam_group_name = "analyze-group"
 iam_iam_group_path = null
@@ -695,10 +696,10 @@ mySubnets_subnet_settings = {
 }
 
 myMwsCredentials_mws_credentials_settings = {
-  mws_credentials_settings_1 = {
+  mws_credentials_1 = {
     myMwsCredentials_mws_credentials_mws_credentials_credentials_name = "myMwsCredentials1"
   },
-  mws_credentials_settings_2 = {
+  mws_credentials_2 = {
     myMwsCredentials_mws_credentials_mws_credentials_credentials_name = "myMwsCredentials2"
   }
 }
@@ -831,8 +832,21 @@ myS3Buckets_s3_bucket_settings = {
 }
 
 myMwsStorageConfigurations_mws_storage_configurations_settings = {
-  mws_configurations_settings_1 = {
+  mws_storage_configurations_1 = {
     myMwsStorageConfigurations_mws_storage_configurations_mws_storage_configurations_storage_configuration_name = "myMwsStorageConfigurations1"
     myMwsStorageConfigurations_mws_storage_configurations_mws_storage_configurations_bucket_name                = "s3_bucket_1"
+  }
+}
+
+myMwsWorkspaces_mws_workspaces_settings = {
+  mws_workspaces_1 = {
+    myMwsWorkspaces_mws_workspaces_mws_workspaces_workspace_name                           = "myMwsWorkspaces1"
+    myMwsWorkspaces_mws_workspaces_mws_workspaces_credentials_id                           = "mws_credentials_1"
+    myMwsWorkspaces_mws_workspaces_mws_workspaces_custom_tags                              = null
+    myMwsWorkspaces_mws_workspaces_mws_workspaces_deployment_name                          = null
+    myMwsWorkspaces_mws_workspaces_mws_workspaces_managed_services_customer_managed_key_id = null
+    myMwsWorkspaces_mws_workspaces_mws_workspaces_network_id                               = "mws_networks_1"
+    myMwsWorkspaces_mws_workspaces_mws_workspaces_private_access_settings_id               = null
+    myMwsWorkspaces_mws_workspaces_mws_workspaces_storage_configuration_id                 = "mws_storage_configurations_1"
   }
 }
