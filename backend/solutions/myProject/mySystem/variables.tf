@@ -466,5 +466,22 @@ variable "myMwsWorkspaces_mws_workspaces_settings" {
     myMwsWorkspaces_mws_workspaces_mws_workspaces_network_id                               = string
     myMwsWorkspaces_mws_workspaces_mws_workspaces_private_access_settings_id               = string
     myMwsWorkspaces_mws_workspaces_mws_workspaces_storage_configuration_id                 = string
+    myMwsWorkspaces_metastore_assignment_metastore_assignment_metastore_id                 = string
+    myMwsWorkspaces_metastore_assignment_metastore_assignment_default_catalog_name         = string
+    myMwsWorkspaces_databricks_user_admin_user                                             = string
+    myMwsWorkspaces_mws_permission_assignment_mws_permission_assignment_permissions        = list(string)
+  }))
+}
+
+variable "myMetastores_metastore_settings" {
+  type = map(object({
+    myMetastores_metastore_metastore_name                                              = string
+    myMetastores_metastore_metastore_storage_root                                      = string
+    myMetastores_metastore_metastore_region                                            = string
+    myMetastores_metastore_metastore_owner                                             = string
+    myMetastores_metastore_metastore_delta_sharing_scope                               = string
+    myMetastores_metastore_metastore_delta_sharing_recipient_token_lifetime_in_seconds = number
+    myMetastores_metastore_metastore_delta_sharing_organization_name                   = string
+    myMetastores_metastore_metastore_force_destroy                                     = bool
   }))
 }

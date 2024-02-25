@@ -828,6 +828,27 @@ myS3Buckets_s3_bucket_settings = {
     myS3Backets_s3_bucket_versioning_s3_bucket_versioning_versioning_configuration_mfa_delete                                         = null
     myS3Backets_s3_bucket_versioning_s3_bucket_versioning_expected_bucket_owner                                                       = null
     myS3Backets_s3_bucket_versioning_s3_bucket_versioning_mfa                                                                         = null
+  },
+  s3_bucket_2 = {
+    myS3Backets_s3_bucket_s3_bucket_bucket                                                          = "mys32-20240225"
+    myS3Backets_s3_bucket_s3_bucket_bucket_prefix                                                   = null
+    myS3Backets_s3_bucket_s3_bucket_force_destroy                                                   = null
+    myS3Backets_s3_bucket_s3_bucket_object_lock_enabled                                             = null
+    myS3Backets_s3_bucket_s3_bucket_tags                                                            = { Name = "myS32" }
+    myS3Backets_s3_bucket_public_access_block_s3_bucket_public_access_block_block_public_acls       = true
+    myS3Backets_s3_bucket_public_access_block_s3_bucket_public_access_block_block_public_policy     = true
+    myS3Backets_s3_bucket_public_access_block_s3_bucket_public_access_block_ignore_public_acls      = true
+    myS3Backets_s3_bucket_public_access_block_s3_bucket_public_access_block_restrict_public_buckets = true
+    myS3Backets_s3_bucket_server_side_encryption_configuration_s3_bucket_server_side_encryption_configuration_rule_apply_server_side_encryption_by_default = [{
+      s3_bucket_server_side_encryption_configuration_rule_apply_server_side_encryption_by_default_sse_algorithm     = "AES256"
+      s3_bucket_server_side_encryption_configuration_rule_apply_server_side_encryption_by_default_kms_master_key_id = null
+    }]
+    myS3Backets_s3_bucket_server_side_encryption_configuration_s3_bucket_server_side_encryption_configuration_rule_bucket_key_enabled = null
+    myS3Backets_s3_bucket_server_side_encryption_configuration_s3_bucket_server_side_encryption_configuration_expected_bucket_owner   = null
+    myS3Backets_s3_bucket_versioning_s3_bucket_versioning_versioning_configuration_status                                             = "Disabled"
+    myS3Backets_s3_bucket_versioning_s3_bucket_versioning_versioning_configuration_mfa_delete                                         = null
+    myS3Backets_s3_bucket_versioning_s3_bucket_versioning_expected_bucket_owner                                                       = null
+    myS3Backets_s3_bucket_versioning_s3_bucket_versioning_mfa                                                                         = null
   }
 }
 
@@ -848,5 +869,22 @@ myMwsWorkspaces_mws_workspaces_settings = {
     myMwsWorkspaces_mws_workspaces_mws_workspaces_network_id                               = "mws_networks_1"
     myMwsWorkspaces_mws_workspaces_mws_workspaces_private_access_settings_id               = null
     myMwsWorkspaces_mws_workspaces_mws_workspaces_storage_configuration_id                 = "mws_storage_configurations_1"
+    myMwsWorkspaces_metastore_assignment_metastore_assignment_metastore_id                 = "metastore_1"
+    myMwsWorkspaces_metastore_assignment_metastore_assignment_default_catalog_name         = null
+    myMwsWorkspaces_databricks_user_admin_user                                             = "ihsotas@adawak.net"
+    myMwsWorkspaces_mws_permission_assignment_mws_permission_assignment_permissions        = ["ADMIN"]
+  }
+}
+
+myMetastores_metastore_settings = {
+  metastore_1 = {
+    myMetastores_metastore_metastore_name                                              = "myMetastore1"
+    myMetastores_metastore_metastore_storage_root                                      = "s3_bucket_2"
+    myMetastores_metastore_metastore_region                                            = "ap-northeast-1"
+    myMetastores_metastore_metastore_owner                                             = null
+    myMetastores_metastore_metastore_delta_sharing_scope                               = null
+    myMetastores_metastore_metastore_delta_sharing_recipient_token_lifetime_in_seconds = null
+    myMetastores_metastore_metastore_delta_sharing_organization_name                   = null
+    myMetastores_metastore_metastore_force_destroy                                     = true
   }
 }

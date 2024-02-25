@@ -786,4 +786,26 @@ module "myMwsWorkspaces" {
   mws_workspaces_mws_workspaces_network_id                               = module.myMwsNetworks[each.value.myMwsWorkspaces_mws_workspaces_mws_workspaces_network_id].mws_networks_network_id
   mws_workspaces_mws_workspaces_private_access_settings_id               = each.value.myMwsWorkspaces_mws_workspaces_mws_workspaces_private_access_settings_id
   mws_workspaces_mws_workspaces_storage_configuration_id                 = module.myMwsStorageConfigurations[each.value.myMwsWorkspaces_mws_workspaces_mws_workspaces_storage_configuration_id].mws_storage_configurations_storage_configuration_id
+  metastore_assignment_metastore_assignment_metastore_id                 = module.myMetastores[each.value.myMwsWorkspaces_metastore_assignment_metastore_assignment_metastore_id].metastore_id
+  metastore_assignment_metastore_assignment_default_catalog_name         = each.value.myMwsWorkspaces_metastore_assignment_metastore_assignment_default_catalog_name
+  databricks_user_admin_user                                             = each.value.myMwsWorkspaces_databricks_user_admin_user
+  mws_permission_assignment_mws_permission_assignment_permissions        = each.value.myMwsWorkspaces_mws_permission_assignment_mws_permission_assignment_permissions
 }
+
+module "myMetastores" {
+  source = "../../../modules/aws/metastore"
+  providers = {
+    databricks = databricks.mws
+  }
+
+  for_each                                                              = var.myMetastores_metastore_settings
+  metastore_metastore_name                                              = each.value.myMetastores_metastore_metastore_name
+  metastore_metastore_storage_root                                      = "s3://${module.myS3Buckets[each.value.myMetastores_metastore_metastore_storage_root].s3_bucket_bucket}/"
+  metastore_metastore_region                                            = each.value.myMetastores_metastore_metastore_region
+  metastore_metastore_owner                                             = each.value.myMetastores_metastore_metastore_owner
+  metastore_metastore_delta_sharing_scope                               = each.value.myMetastores_metastore_metastore_delta_sharing_scope
+  metastore_metastore_delta_sharing_recipient_token_lifetime_in_seconds = each.value.myMetastores_metastore_metastore_delta_sharing_recipient_token_lifetime_in_seconds
+  metastore_metastore_delta_sharing_organization_name                   = each.value.myMetastores_metastore_metastore_delta_sharing_organization_name
+  metastore_metastore_force_destroy                                     = each.value.myMetastores_metastore_metastore_force_destroy
+}
+

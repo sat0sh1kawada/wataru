@@ -30,3 +30,15 @@ variable "mws_workspaces_mws_workspaces_private_access_settings_id" {
 variable "mws_workspaces_mws_workspaces_storage_configuration_id" {
   type = string
 }
+variable "metastore_assignment_metastore_assignment_metastore_id" {
+  type = string
+}
+variable "metastore_assignment_metastore_assignment_default_catalog_name" {
+  type = string
+}
+variable "databricks_user_admin_user" {
+  type = string
+}
+variable "mws_permission_assignment_mws_permission_assignment_permissions" {
+  type = list(string)
+}
