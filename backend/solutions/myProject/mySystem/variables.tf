@@ -421,3 +421,34 @@ variable "myMwsNetworks_mws_networks_settings" {
     }))
   }))
 }
+
+variable "myS3Buckets_s3_bucket_settings" {
+  type = map(object({
+    myS3Backets_s3_bucket_s3_bucket_bucket                                                          = string
+    myS3Backets_s3_bucket_s3_bucket_bucket_prefix                                                   = string
+    myS3Backets_s3_bucket_s3_bucket_force_destroy                                                   = bool
+    myS3Backets_s3_bucket_s3_bucket_object_lock_enabled                                             = bool
+    myS3Backets_s3_bucket_s3_bucket_tags                                                            = map(string)
+    myS3Backets_s3_bucket_public_access_block_s3_bucket_public_access_block_block_public_acls       = bool
+    myS3Backets_s3_bucket_public_access_block_s3_bucket_public_access_block_block_public_policy     = bool
+    myS3Backets_s3_bucket_public_access_block_s3_bucket_public_access_block_ignore_public_acls      = bool
+    myS3Backets_s3_bucket_public_access_block_s3_bucket_public_access_block_restrict_public_buckets = bool
+    myS3Backets_s3_bucket_server_side_encryption_configuration_s3_bucket_server_side_encryption_configuration_rule_apply_server_side_encryption_by_default = list(object({
+      s3_bucket_server_side_encryption_configuration_rule_apply_server_side_encryption_by_default_sse_algorithm     = string
+      s3_bucket_server_side_encryption_configuration_rule_apply_server_side_encryption_by_default_kms_master_key_id = string
+    }))
+    myS3Backets_s3_bucket_server_side_encryption_configuration_s3_bucket_server_side_encryption_configuration_rule_bucket_key_enabled = bool
+    myS3Backets_s3_bucket_server_side_encryption_configuration_s3_bucket_server_side_encryption_configuration_expected_bucket_owner   = string
+    myS3Backets_s3_bucket_versioning_s3_bucket_versioning_versioning_configuration_status                                             = string
+    myS3Backets_s3_bucket_versioning_s3_bucket_versioning_versioning_configuration_mfa_delete                                         = string
+    myS3Backets_s3_bucket_versioning_s3_bucket_versioning_expected_bucket_owner                                                       = string
+    myS3Backets_s3_bucket_versioning_s3_bucket_versioning_mfa                                                                         = string
+  }))
+}
+
+variable "myMwsStorageConfigurations_mws_storage_configurations_settings" {
+  type = map(object({
+    myMwsStorageConfigurations_mws_storage_configurations_mws_storage_configurations_storage_configuration_name = string
+    myMwsStorageConfigurations_mws_storage_configurations_mws_storage_configurations_bucket_name                = string
+  }))
+}

@@ -665,6 +665,7 @@ module "myMwsCredentials" {
   mws_credentials_mws_credentials_credentials_name = each.value.myMwsCredentials_mws_credentials_mws_credentials_credentials_name
 }
 
+# My Security Groups
 module "mySecurityGroups" {
   source = "../../../modules/aws/security_group"
 
@@ -679,6 +680,7 @@ module "mySecurityGroups" {
   security_group_security_group_vpc_id                 = module.myVpcs[each.value.mySecurityGroups_security_group_security_group_vpc_id].vpc_id
 }
 
+# My Vpc Security Group Egress Rules
 module "myVpcSecurityGroupEgressRules" {
   source = "../../../modules/aws/vpc_security_group_egress_rule"
 
@@ -695,6 +697,7 @@ module "myVpcSecurityGroupEgressRules" {
   vpc_security_group_egress_rule_vpc_security_group_egress_rule_to_port                      = each.value.myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_to_port
 }
 
+# My Vpc Security Group Ingress Rules
 module "myVpcSecurityGroupIngressRules" {
   source = "../../../modules/aws/vpc_security_group_ingress_rule"
 
@@ -722,4 +725,37 @@ module "myMwsNetworks" {
   mws_networks_mws_networks_subnet_ids         = [for s in each.value.myMwsNetworks_mws_networks_mws_networks_subnet_ids : module.mySubnets[s].subnet_id]
   mws_networks_mws_networks_security_group_ids = [for s in each.value.myMwsNetworks_mws_networks_mws_networks_security_group_ids : module.mySecurityGroups[s].security_group_id]
   mws_networks_mws_networks_vpc_endpoints      = each.value.myMwsNetworks_mws_networks_mws_networks_vpc_endpoints
+}
+
+# My S3 Buckets
+module "myS3Buckets" {
+  source = "../../../modules/aws/s3_bucket"
+
+  for_each                                                                                                                                   = var.myS3Buckets_s3_bucket_settings
+  s3_bucket_s3_bucket_bucket                                                                                                                 = each.value.myS3Backets_s3_bucket_s3_bucket_bucket
+  s3_bucket_s3_bucket_bucket_prefix                                                                                                          = each.value.myS3Backets_s3_bucket_s3_bucket_bucket_prefix
+  s3_bucket_s3_bucket_tags                                                                                                                   = each.value.myS3Backets_s3_bucket_s3_bucket_tags
+  s3_bucket_s3_bucket_force_destroy                                                                                                          = each.value.myS3Backets_s3_bucket_s3_bucket_force_destroy
+  s3_bucket_s3_bucket_object_lock_enabled                                                                                                    = each.value.myS3Backets_s3_bucket_s3_bucket_object_lock_enabled
+  s3_bucket_public_access_block_s3_bucket_public_access_block_block_public_acls                                                              = each.value.myS3Backets_s3_bucket_public_access_block_s3_bucket_public_access_block_block_public_acls
+  s3_bucket_public_access_block_s3_bucket_public_access_block_block_public_policy                                                            = each.value.myS3Backets_s3_bucket_public_access_block_s3_bucket_public_access_block_block_public_policy
+  s3_bucket_public_access_block_s3_bucket_public_access_block_ignore_public_acls                                                             = each.value.myS3Backets_s3_bucket_public_access_block_s3_bucket_public_access_block_ignore_public_acls
+  s3_bucket_public_access_block_s3_bucket_public_access_block_restrict_public_buckets                                                        = each.value.myS3Backets_s3_bucket_public_access_block_s3_bucket_public_access_block_restrict_public_buckets
+  s3_bucket_server_side_encryption_configuration_s3_bucket_server_side_encryption_configuration_rule_apply_server_side_encryption_by_default = each.value.myS3Backets_s3_bucket_server_side_encryption_configuration_s3_bucket_server_side_encryption_configuration_rule_apply_server_side_encryption_by_default
+  s3_bucket_server_side_encryption_configuration_s3_bucket_server_side_encryption_configuration_rule_bucket_key_enabled                      = each.value.myS3Backets_s3_bucket_server_side_encryption_configuration_s3_bucket_server_side_encryption_configuration_rule_bucket_key_enabled
+  s3_bucket_server_side_encryption_configuration_s3_bucket_server_side_encryption_configuration_expected_bucket_owner                        = each.value.myS3Backets_s3_bucket_server_side_encryption_configuration_s3_bucket_server_side_encryption_configuration_expected_bucket_owner
+  s3_bucket_versioning_s3_bucket_versioning_versioning_configuration_status                                                                  = each.value.myS3Backets_s3_bucket_versioning_s3_bucket_versioning_versioning_configuration_status
+  s3_bucket_versioning_s3_bucket_versioning_versioning_configuration_mfa_delete                                                              = each.value.myS3Backets_s3_bucket_versioning_s3_bucket_versioning_versioning_configuration_mfa_delete
+  s3_bucket_versioning_s3_bucket_versioning_expected_bucket_owner                                                                            = each.value.myS3Backets_s3_bucket_versioning_s3_bucket_versioning_expected_bucket_owner
+  s3_bucket_versioning_s3_bucket_versioning_mfa                                                                                              = each.value.myS3Backets_s3_bucket_versioning_s3_bucket_versioning_mfa
+}
+
+# My Mws Storage Configurations
+module "myMwsStorageConfigurations" {
+  source = "../../../modules/aws/mws_storage_configurations"
+
+  for_each                                                                         = var.myMwsStorageConfigurations_mws_storage_configurations_settings
+  mws_storage_configurations_mws_storage_configurations_account_id                 = var.databricks_account_id
+  mws_storage_configurations_mws_storage_configurations_bucket_name                = module.myS3Buckets[each.value.myMwsStorageConfigurations_mws_storage_configurations_mws_storage_configurations_bucket_name].s3_bucket_bucket
+  mws_storage_configurations_mws_storage_configurations_storage_configuration_name = each.value.myMwsStorageConfigurations_mws_storage_configurations_mws_storage_configurations_storage_configuration_name
 }

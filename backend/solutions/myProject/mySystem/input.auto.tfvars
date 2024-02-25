@@ -805,3 +805,34 @@ myMwsNetworks_mws_networks_settings = {
     myMwsNetworks_mws_networks_mws_networks_vpc_endpoints      = []
   }
 }
+
+myS3Buckets_s3_bucket_settings = {
+  s3_bucket_1 = {
+    myS3Backets_s3_bucket_s3_bucket_bucket                                                          = "mys31-20240225"
+    myS3Backets_s3_bucket_s3_bucket_bucket_prefix                                                   = null
+    myS3Backets_s3_bucket_s3_bucket_force_destroy                                                   = null
+    myS3Backets_s3_bucket_s3_bucket_object_lock_enabled                                             = null
+    myS3Backets_s3_bucket_s3_bucket_tags                                                            = { Name = "myS31" }
+    myS3Backets_s3_bucket_public_access_block_s3_bucket_public_access_block_block_public_acls       = true
+    myS3Backets_s3_bucket_public_access_block_s3_bucket_public_access_block_block_public_policy     = true
+    myS3Backets_s3_bucket_public_access_block_s3_bucket_public_access_block_ignore_public_acls      = true
+    myS3Backets_s3_bucket_public_access_block_s3_bucket_public_access_block_restrict_public_buckets = true
+    myS3Backets_s3_bucket_server_side_encryption_configuration_s3_bucket_server_side_encryption_configuration_rule_apply_server_side_encryption_by_default = [{
+      s3_bucket_server_side_encryption_configuration_rule_apply_server_side_encryption_by_default_sse_algorithm     = "AES256"
+      s3_bucket_server_side_encryption_configuration_rule_apply_server_side_encryption_by_default_kms_master_key_id = null
+    }]
+    myS3Backets_s3_bucket_server_side_encryption_configuration_s3_bucket_server_side_encryption_configuration_rule_bucket_key_enabled = null
+    myS3Backets_s3_bucket_server_side_encryption_configuration_s3_bucket_server_side_encryption_configuration_expected_bucket_owner   = null
+    myS3Backets_s3_bucket_versioning_s3_bucket_versioning_versioning_configuration_status                                             = "Disabled"
+    myS3Backets_s3_bucket_versioning_s3_bucket_versioning_versioning_configuration_mfa_delete                                         = null
+    myS3Backets_s3_bucket_versioning_s3_bucket_versioning_expected_bucket_owner                                                       = null
+    myS3Backets_s3_bucket_versioning_s3_bucket_versioning_mfa                                                                         = null
+  }
+}
+
+myMwsStorageConfigurations_mws_storage_configurations_settings = {
+  mws_configurations_settings_1 = {
+    myMwsStorageConfigurations_mws_storage_configurations_mws_storage_configurations_storage_configuration_name = "myMwsStorageConfigurations1"
+    myMwsStorageConfigurations_mws_storage_configurations_mws_storage_configurations_bucket_name                = "s3_bucket_1"
+  }
+}

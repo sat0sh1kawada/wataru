@@ -1,4 +1,4 @@
-# mws_credentials module
+# databricks_mws_storage_configurations element
 # versions.tf
 terraform {
   required_providers {

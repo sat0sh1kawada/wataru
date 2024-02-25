@@ -1,4 +1,4 @@
-# mws_credentials module
+# mws_storage_configurations module
 # versions.tf
 terraform {
   required_providers {
