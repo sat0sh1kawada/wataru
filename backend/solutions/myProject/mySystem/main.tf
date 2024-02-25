@@ -599,13 +599,9 @@ module "myEIPs" {
 module "myNatGateways" {
   source = "../../../modules/aws/nat_gateway"
 
-  for_each                          = var.myNatGateways_nat_gateway_settings
-  nat_gateway_nat_gateway_subnet_id = module.mySubnets[each.value.myNatGateways_nat_gateway_nat_gateway_subnet_id].subnet_id
-  nat_gateway_nat_gateway_allocation_id = (
-    each.value.myNatGateways_nat_gateway_nat_gateway_allocation_id != null ?
-    module.myEIPs[each.value.myNatGateways_nat_gateway_nat_gateway_allocation_id].eip_id :
-    null
-  )
+  for_each                                                   = var.myNatGateways_nat_gateway_settings
+  nat_gateway_nat_gateway_subnet_id                          = module.mySubnets[each.value.myNatGateways_nat_gateway_nat_gateway_subnet_id].subnet_id
+  nat_gateway_nat_gateway_allocation_id                      = try(module.myEIPs[each.value.myNatGateways_nat_gateway_nat_gateway_allocation_id].eip_id, null)
   nat_gateway_nat_gateway_connectivity_type                  = each.value.myNatGateways_nat_gateway_nat_gateway_connectivity_type
   nat_gateway_nat_gateway_private_ip                         = each.value.myNatGateways_nat_gateway_nat_gateway_private_ip
   nat_gateway_nat_gateway_secondary_allocation_ids           = each.value.myNatGateways_nat_gateway_nat_gateway_secondary_allocation_ids
@@ -626,21 +622,13 @@ module "myRoutes" {
   route_route_carrier_gateway_id          = each.value.myRoutes_route_route_carrier_gateway_id
   route_route_core_network_arn            = each.value.myRoutes_route_route_core_network_arn
   route_route_egress_only_gateway_id      = each.value.myRoutes_route_route_egress_only_gateway_id
-  route_route_gateway_id = (
-    each.value.myRoutes_route_route_gateway_id != null ?
-    module.myInternetGateways[each.value.myRoutes_route_route_gateway_id].internet_gateway_id :
-    null
-  )
-  route_route_nat_gateway_id = (
-    each.value.myRoutes_route_route_nat_gateway_id != null ?
-    module.myNatGateways[each.value.myRoutes_route_route_nat_gateway_id].nat_gateway_id :
-    null
-  )
-  route_route_local_gateway_id          = each.value.myRoutes_route_route_local_gateway_id
-  route_route_network_interface_id      = each.value.myRoutes_route_route_network_interface_id
-  route_route_transit_gateway_id        = each.value.myRoutes_route_route_transit_gateway_id
-  route_route_vpc_endpoint_id           = each.value.myRoutes_route_route_vpc_endpoint_id
-  route_route_vpc_peering_connection_id = each.value.myRoutes_route_route_vpc_peering_connection_id
+  route_route_gateway_id                  = try(module.myInternetGateways[each.value.myRoutes_route_route_gateway_id].internet_gateway_id, null)
+  route_route_nat_gateway_id              = try(module.myNatGateways[each.value.myRoutes_route_route_nat_gateway_id].nat_gateway_id, null)
+  route_route_local_gateway_id            = each.value.myRoutes_route_route_local_gateway_id
+  route_route_network_interface_id        = each.value.myRoutes_route_route_network_interface_id
+  route_route_transit_gateway_id          = each.value.myRoutes_route_route_transit_gateway_id
+  route_route_vpc_endpoint_id             = each.value.myRoutes_route_route_vpc_endpoint_id
+  route_route_vpc_peering_connection_id   = each.value.myRoutes_route_route_vpc_peering_connection_id
 }
 
 # My Subnets
@@ -676,3 +664,50 @@ module "myMwsCredentials" {
   aws_assume_role_policy_external_id               = var.databricks_account_id
   mws_credentials_mws_credentials_credentials_name = each.value.myMwsCredentials_mws_credentials_mws_credentials_credentials_name
 }
+
+module "mySecurityGroups" {
+  source = "../../../modules/aws/security_group"
+
+  for_each                                             = var.mySecurityGroups_security_group_settings
+  security_group_security_group_description            = each.value.mySecurityGroups_security_group_security_group_description
+  security_group_security_group_egress                 = each.value.mySecurityGroups_security_group_security_group_egress
+  security_group_security_group_ingress                = each.value.mySecurityGroups_security_group_security_group_ingress
+  security_group_security_group_name_prefix            = each.value.mySecurityGroups_security_group_security_group_name_prefix
+  security_group_security_group_name                   = each.value.mySecurityGroups_security_group_security_group_name
+  security_group_security_group_revoke_rules_on_delete = each.value.mySecurityGroups_security_group_security_group_revoke_rules_on_delete
+  security_group_security_group_tags                   = each.value.mySecurityGroups_security_group_security_group_tags
+  security_group_security_group_vpc_id                 = module.myVpcs[each.value.mySecurityGroups_security_group_security_group_vpc_id].vpc_id
+}
+
+module "myVpcSecurityGroupEgressRules" {
+  source = "../../../modules/aws/vpc_security_group_egress_rule"
+
+  for_each                                                                                   = var.myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_settings
+  vpc_security_group_egress_rule_vpc_security_group_egress_rule_security_group_id            = module.mySecurityGroups[each.value.myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_security_group_id].security_group_id
+  vpc_security_group_egress_rule_vpc_security_group_egress_rule_cidr_ipv4                    = each.value.myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_cidr_ipv4
+  vpc_security_group_egress_rule_vpc_security_group_egress_rule_cidr_ipv6                    = each.value.myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_cidr_ipv6
+  vpc_security_group_egress_rule_vpc_security_group_egress_rule_description                  = each.value.myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_description
+  vpc_security_group_egress_rule_vpc_security_group_egress_rule_from_port                    = each.value.myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_from_port
+  vpc_security_group_egress_rule_vpc_security_group_egress_rule_ip_protocol                  = each.value.myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_ip_protocol
+  vpc_security_group_egress_rule_vpc_security_group_egress_rule_prefix_list_id               = each.value.myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_prefix_list_id
+  vpc_security_group_egress_rule_vpc_security_group_egress_rule_referenced_security_group_id = try(module.mySecurityGroups[each.value.myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_referenced_security_group_id].security_group_id, null)
+  vpc_security_group_egress_rule_vpc_security_group_egress_rule_tags                         = each.value.myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_tags
+  vpc_security_group_egress_rule_vpc_security_group_egress_rule_to_port                      = each.value.myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_to_port
+}
+
+module "myVpcSecurityGroupIngressRules" {
+  source = "../../../modules/aws/vpc_security_group_ingress_rule"
+
+  for_each                                                                                     = var.myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_settings
+  vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_security_group_id            = module.mySecurityGroups[each.value.myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_security_group_id].security_group_id
+  vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_cidr_ipv4                    = each.value.myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_cidr_ipv4
+  vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_cidr_ipv6                    = each.value.myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_cidr_ipv6
+  vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_description                  = each.value.myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_description
+  vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_from_port                    = each.value.myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_from_port
+  vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_ip_protocol                  = each.value.myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_ip_protocol
+  vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_prefix_list_id               = each.value.myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_prefix_list_id
+  vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_referenced_security_group_id = try(module.mySecurityGroups[each.value.myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_referenced_security_group_id].security_group_id, null)
+  vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_tags                         = each.value.myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_tags
+  vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_to_port                      = each.value.myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_to_port
+}
+

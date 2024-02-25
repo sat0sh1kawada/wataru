@@ -345,3 +345,66 @@ variable "myMwsCredentials_mws_credentials_settings" {
     myMwsCredentials_mws_credentials_mws_credentials_credentials_name = string
   }))
 }
+
+variable "mySecurityGroups_security_group_settings" {
+  type = map(object({
+    mySecurityGroups_security_group_security_group_description = string
+    mySecurityGroups_security_group_security_group_egress = list(object({
+      security_group_egress_cidr_blocks      = list(string)
+      security_group_egress_description      = string
+      security_group_egress_from_port        = number
+      security_group_egress_ipv6_cidr_blocks = list(string)
+      security_group_egress_prefix_list_ids  = list(string)
+      security_group_egress_protocol         = string
+      security_group_egress_security_groups  = set(string)
+      security_group_egress_self             = bool
+      security_group_egress_to_port          = number
+    }))
+    mySecurityGroups_security_group_security_group_ingress = list(object({
+      security_group_ingress_cidr_blocks      = list(string)
+      security_group_ingress_description      = string
+      security_group_ingress_from_port        = number
+      security_group_ingress_ipv6_cidr_blocks = list(string)
+      security_group_ingress_prefix_list_ids  = list(string)
+      security_group_ingress_protocol         = string
+      security_group_ingress_security_groups  = set(string)
+      security_group_ingress_self             = bool
+      security_group_ingress_to_port          = number
+    }))
+    mySecurityGroups_security_group_security_group_name_prefix            = string
+    mySecurityGroups_security_group_security_group_name                   = string
+    mySecurityGroups_security_group_security_group_revoke_rules_on_delete = bool
+    mySecurityGroups_security_group_security_group_tags                   = map(string)
+    mySecurityGroups_security_group_security_group_vpc_id                 = string
+  }))
+}
+
+variable "myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_settings" {
+  type = map(object({
+    myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_security_group_id            = string
+    myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_cidr_ipv4                    = string
+    myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_cidr_ipv6                    = string
+    myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_description                  = string
+    myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_from_port                    = number
+    myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_ip_protocol                  = string
+    myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_prefix_list_id               = string
+    myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_referenced_security_group_id = string
+    myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_tags                         = map(string)
+    myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_to_port                      = number
+  }))
+}
+
+variable "myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_settings" {
+  type = map(object({
+    myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_security_group_id            = string
+    myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_cidr_ipv4                    = string
+    myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_cidr_ipv6                    = string
+    myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_description                  = string
+    myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_from_port                    = number
+    myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_ip_protocol                  = string
+    myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_prefix_list_id               = string
+    myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_referenced_security_group_id = string
+    myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_tags                         = map(string)
+    myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_to_port                      = number
+  }))
+}
