@@ -412,6 +412,44 @@ variable "myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_setting
   }))
 }
 
+variable "myVpcEndpoints_vpc_endpoint_settings" {
+  type = map(object({
+    myVpcEndpoints_vpc_endpoint_vpc_endpoint_service_name        = string
+    myVpcEndpoints_vpc_endpoint_vpc_endpoint_vpc_id              = string
+    myVpcEndpoints_vpc_endpoint_vpc_endpoint_auto_accept         = bool
+    myVpcEndpoints_vpc_endpoint_vpc_endpoint_policy              = string
+    myVpcEndpoints_vpc_endpoint_vpc_endpoint_private_dns_enabled = bool
+    myVpcEndpoints_vpc_endpoint_vpc_endpoint_dns_options = list(object({
+      vpc_endpoint_dns_options_dns_record_ip_type                             = string
+      vpc_endpoint_dns_options_private_dns_only_for_inbound_resolver_endpoint = bool
+    }))
+    myVpcEndpoints_vpc_endpoint_vpc_endpoint_ip_address_type    = string
+    myVpcEndpoints_vpc_endpoint_vpc_endpoint_route_table_ids    = set(string)
+    myVpcEndpoints_vpc_endpoint_vpc_endpoint_subnet_ids         = set(string)
+    myVpcEndpoints_vpc_endpoint_vpc_endpoint_security_group_ids = set(string)
+    myVpcEndpoints_vpc_endpoint_vpc_endpoint_tags               = map(string)
+    myVpcEndpoints_vpc_endpoint_vpc_endpoint_vpc_endpoint_type  = string
+  }))
+}
+
+variable "myMwsVpcEndpoints_mws_vpc_endpoint_settings" {
+  type = map(object({
+    myMwsVpcEndpoints_mws_vpc_endpoint_mws_vpc_endpoint_vpc_endpoint_name   = string
+    myMwsVpcEndpoints_mws_vpc_endpoint_mws_vpc_endpoint_aws_vpc_endpoint_id = string
+    myMwsVpcEndpoints_mws_vpc_endpoint_mws_vpc_endpoint_region              = string
+  }))
+}
+
+variable "myMwsPrivateAccessSettings_mws_private_access_settings" {
+  type = map(object({
+    myMwsPrivateAccessSettings_mws_private_access_settings_mws_private_access_settings_private_access_settings_name = string
+    myMwsPrivateAccessSettings_mws_private_access_settings_mws_private_access_settings_region                       = string
+    myMwsPrivateAccessSettings_mws_private_access_settings_mws_private_access_settings_public_access_enabled        = bool
+    myMwsPrivateAccessSettings_mws_private_access_settings_mws_private_access_settings_private_access_level         = string
+    myMwsPrivateAccessSettings_mws_private_access_settings_mws_private_access_settings_allowed_vpc_endpoint_ids     = list(string)
+  }))
+}
+
 variable "myMwsNetworks_mws_networks_settings" {
   type = map(object({
     myMwsNetworks_mws_networks_mws_networks_network_name       = string

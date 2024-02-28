@@ -4,7 +4,8 @@ terraform {
       source = "hashicorp/aws"
     }
     databricks = {
-      source = "databricks/databricks"
+      source  = "databricks/databricks"
+      version = "~>1.35.0"
     }
   }
 }
@@ -717,6 +718,55 @@ module "myVpcSecurityGroupIngressRules" {
   vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_to_port                      = each.value.myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_to_port
 }
 
+# My Vpc Endpoints
+module "myVpcEndpoints" {
+  source = "../../../modules/aws/vpc_endpoint"
+
+  for_each                                      = var.myVpcEndpoints_vpc_endpoint_settings
+  vpc_endpoint_vpc_endpoint_service_name        = each.value.myVpcEndpoints_vpc_endpoint_vpc_endpoint_service_name
+  vpc_endpoint_vpc_endpoint_vpc_id              = module.myVpcs[each.value.myVpcEndpoints_vpc_endpoint_vpc_endpoint_vpc_id].vpc_id
+  vpc_endpoint_vpc_endpoint_auto_accept         = each.value.myVpcEndpoints_vpc_endpoint_vpc_endpoint_auto_accept
+  vpc_endpoint_vpc_endpoint_policy              = each.value.myVpcEndpoints_vpc_endpoint_vpc_endpoint_policy
+  vpc_endpoint_vpc_endpoint_private_dns_enabled = each.value.myVpcEndpoints_vpc_endpoint_vpc_endpoint_private_dns_enabled
+  vpc_endpoint_vpc_endpoint_dns_options         = each.value.myVpcEndpoints_vpc_endpoint_vpc_endpoint_dns_options
+  vpc_endpoint_vpc_endpoint_ip_address_type     = each.value.myVpcEndpoints_vpc_endpoint_vpc_endpoint_ip_address_type
+  vpc_endpoint_vpc_endpoint_route_table_ids     = [for s in each.value.myVpcEndpoints_vpc_endpoint_vpc_endpoint_route_table_ids : module.myRouteTables[s].route_table_id]
+  vpc_endpoint_vpc_endpoint_subnet_ids          = [for s in each.value.myVpcEndpoints_vpc_endpoint_vpc_endpoint_subnet_ids : module.mySubnets[s].subnet_id]
+  vpc_endpoint_vpc_endpoint_security_group_ids  = [for s in each.value.myVpcEndpoints_vpc_endpoint_vpc_endpoint_security_group_ids : module.mySecurityGroups[s].security_group_id]
+  vpc_endpoint_vpc_endpoint_tags                = each.value.myVpcEndpoints_vpc_endpoint_vpc_endpoint_tags
+  vpc_endpoint_vpc_endpoint_vpc_endpoint_type   = each.value.myVpcEndpoints_vpc_endpoint_vpc_endpoint_vpc_endpoint_type
+}
+
+# My Mws Vpc Endpoints
+module "myMwsVpcEndpoints" {
+  source = "../../../modules/aws/mws_vpc_endpoint"
+  providers = {
+    databricks = databricks.mws
+  }
+
+  for_each                                              = var.myMwsVpcEndpoints_mws_vpc_endpoint_settings
+  mws_vpc_endpoint_mws_vpc_endpoint_vpc_endpoint_name   = each.value.myMwsVpcEndpoints_mws_vpc_endpoint_mws_vpc_endpoint_vpc_endpoint_name
+  mws_vpc_endpoint_mws_vpc_endpoint_account_id          = var.databricks_account_id
+  mws_vpc_endpoint_mws_vpc_endpoint_aws_vpc_endpoint_id = module.myVpcEndpoints[each.value.myMwsVpcEndpoints_mws_vpc_endpoint_mws_vpc_endpoint_aws_vpc_endpoint_id].vpc_endpoint_id
+  mws_vpc_endpoint_mws_vpc_endpoint_region              = each.value.myMwsVpcEndpoints_mws_vpc_endpoint_mws_vpc_endpoint_region
+}
+
+# My Mws Private Access Settings
+module "myMwsPrivateAccessSettings" {
+  source = "../../../modules/aws/mws_private_access_settings"
+  providers = {
+    databricks = databricks.mws
+  }
+
+  for_each                                                                             = var.myMwsPrivateAccessSettings_mws_private_access_settings
+  mws_private_access_settings_mws_private_access_settings_private_access_settings_name = each.value.myMwsPrivateAccessSettings_mws_private_access_settings_mws_private_access_settings_private_access_settings_name
+  mws_private_access_settings_mws_private_access_settings_public_access_enabled        = each.value.myMwsPrivateAccessSettings_mws_private_access_settings_mws_private_access_settings_public_access_enabled
+  mws_private_access_settings_mws_private_access_settings_account_id                   = var.databricks_account_id
+  mws_private_access_settings_mws_private_access_settings_region                       = each.value.myMwsPrivateAccessSettings_mws_private_access_settings_mws_private_access_settings_region
+  mws_private_access_settings_mws_private_access_settings_private_access_level         = each.value.myMwsPrivateAccessSettings_mws_private_access_settings_mws_private_access_settings_private_access_level
+  mws_private_access_settings_mws_private_access_settings_allowed_vpc_endpoint_ids     = each.value.myMwsPrivateAccessSettings_mws_private_access_settings_mws_private_access_settings_allowed_vpc_endpoint_ids
+}
+
 # My Mws Networks
 module "myMwsNetworks" {
   source = "../../../modules/aws/mws_networks"
@@ -730,7 +780,10 @@ module "myMwsNetworks" {
   mws_networks_mws_networks_vpc_id             = module.myVpcs[each.value.myMwsNetworks_mws_networks_mws_networks_vpc_id].vpc_id
   mws_networks_mws_networks_subnet_ids         = [for s in each.value.myMwsNetworks_mws_networks_mws_networks_subnet_ids : module.mySubnets[s].subnet_id]
   mws_networks_mws_networks_security_group_ids = [for s in each.value.myMwsNetworks_mws_networks_mws_networks_security_group_ids : module.mySecurityGroups[s].security_group_id]
-  mws_networks_mws_networks_vpc_endpoints      = each.value.myMwsNetworks_mws_networks_mws_networks_vpc_endpoints
+  mws_networks_mws_networks_vpc_endpoints = [{
+    mws_networks_vpc_endpoints_dataplane_relay = [for s in each.value.myMwsNetworks_mws_networks_mws_networks_vpc_endpoints[0].mws_networks_vpc_endpoints_dataplane_relay : module.myMwsVpcEndpoints[s].mws_vpc_endpoint_vpc_endpoint_id],
+    mws_networks_vpc_endpoints_rest_api        = [for s in each.value.myMwsNetworks_mws_networks_mws_networks_vpc_endpoints[0].mws_networks_vpc_endpoints_rest_api : module.myMwsVpcEndpoints[s].mws_vpc_endpoint_vpc_endpoint_id]
+  }]
 }
 
 # My S3 Buckets
@@ -784,7 +837,7 @@ module "myMwsWorkspaces" {
   mws_workspaces_mws_workspaces_deployment_name                          = each.value.myMwsWorkspaces_mws_workspaces_mws_workspaces_deployment_name
   mws_workspaces_mws_workspaces_managed_services_customer_managed_key_id = each.value.myMwsWorkspaces_mws_workspaces_mws_workspaces_managed_services_customer_managed_key_id
   mws_workspaces_mws_workspaces_network_id                               = module.myMwsNetworks[each.value.myMwsWorkspaces_mws_workspaces_mws_workspaces_network_id].mws_networks_network_id
-  mws_workspaces_mws_workspaces_private_access_settings_id               = each.value.myMwsWorkspaces_mws_workspaces_mws_workspaces_private_access_settings_id
+  mws_workspaces_mws_workspaces_private_access_settings_id               = module.myMwsPrivateAccessSettings[each.value.myMwsWorkspaces_mws_workspaces_mws_workspaces_private_access_settings_id].mws_private_access_settings_private_access_settings_id
   mws_workspaces_mws_workspaces_storage_configuration_id                 = module.myMwsStorageConfigurations[each.value.myMwsWorkspaces_mws_workspaces_mws_workspaces_storage_configuration_id].mws_storage_configurations_storage_configuration_id
   metastore_assignment_metastore_assignment_metastore_id                 = module.myMetastores[each.value.myMwsWorkspaces_metastore_assignment_metastore_assignment_metastore_id].metastore_id
   metastore_assignment_metastore_assignment_default_catalog_name         = each.value.myMwsWorkspaces_metastore_assignment_metastore_assignment_default_catalog_name
