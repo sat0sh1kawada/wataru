@@ -24,7 +24,7 @@ provider "databricks" {
 
 provider "databricks" {
   alias         = "workspace"
-  host          = module.databricks_workspace.workspace.workspace_url
+  host          = module.myMwsWorkspaces["mws_workspaces_1"].mws_workspaces_workspace_url
   client_id     = var.databricks_client_id
   client_secret = var.databricks_client_secret
 }
@@ -780,10 +780,10 @@ module "myMwsNetworks" {
   mws_networks_mws_networks_vpc_id             = module.myVpcs[each.value.myMwsNetworks_mws_networks_mws_networks_vpc_id].vpc_id
   mws_networks_mws_networks_subnet_ids         = [for s in each.value.myMwsNetworks_mws_networks_mws_networks_subnet_ids : module.mySubnets[s].subnet_id]
   mws_networks_mws_networks_security_group_ids = [for s in each.value.myMwsNetworks_mws_networks_mws_networks_security_group_ids : module.mySecurityGroups[s].security_group_id]
-  mws_networks_mws_networks_vpc_endpoints = [{
+  mws_networks_mws_networks_vpc_endpoints      = [/*{
     mws_networks_vpc_endpoints_dataplane_relay = [for s in each.value.myMwsNetworks_mws_networks_mws_networks_vpc_endpoints[0].mws_networks_vpc_endpoints_dataplane_relay : module.myMwsVpcEndpoints[s].mws_vpc_endpoint_vpc_endpoint_id],
     mws_networks_vpc_endpoints_rest_api        = [for s in each.value.myMwsNetworks_mws_networks_mws_networks_vpc_endpoints[0].mws_networks_vpc_endpoints_rest_api : module.myMwsVpcEndpoints[s].mws_vpc_endpoint_vpc_endpoint_id]
-  }]
+  }*/]
 }
 
 # My S3 Buckets
@@ -862,3 +862,14 @@ module "myMetastores" {
   metastore_metastore_force_destroy                                     = each.value.myMetastores_metastore_metastore_force_destroy
 }
 
+module "myMetastoreAssignments" {
+  source = "../../../modules/aws/metastore_assignment"
+  providers = {
+    databricks = databricks.workspace
+  }
+  for_each                                                       = var.myMetastoreAssignments_metastore_assigment_settings
+  metastore_assignment_metastore_assignment_metastore_id         = module.myMetastores[each.value.myMetastoreAssignments_metastore_assignment_metastore_assignment_metastore_id].metastore_id
+  metastore_assignment_metastore_assignment_workspace_id         = module.myMwsWorkspaces[each.value.myMetastoreAssignments_metastore_assignment_metastore_assignment_workspace_id].mws_workspaces_workspace_id
+  metastore_assignment_metastore_assignment_default_catalog_name = each.value.myMetastoreAssignments_metastore_assignment_metastore_assignment_default_catalog_name
+  //  depends_on                                                     = [module.myVpcSecurityGroupEgressRules, module.myVpcSecurityGroupIngressRules]
+}

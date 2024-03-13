@@ -1,0 +1,3 @@
+variable "metastore_assignment_metastore_assignment_metastore_id" {}
+variable "metastore_assignment_metastore_assignment_workspace_id" {}
+variable "metastore_assignment_metastore_assignment_default_catalog_name" {}

@@ -538,6 +538,21 @@ myVpcs_vpc_settings = {
     myVpcs_vpc_vpc_enable_dns_hostnames                 = true,
     myVpcs_vpc_vpc_assign_generated_ipv6_cidr_block     = null,
     myVpcs_vpc_vpc_tags                                 = { Name = "myVpc1" }
+  },
+  vpc_2 = {
+    myVpcs_vpc_vpc_cidr_block                           = "10.192.0.0/16",
+    myVpcs_vpc_vpc_instance_tenancy                     = "default",
+    myVpcs_vpc_vpc_ipv4_ipam_pool_id                    = null,
+    myVpcs_vpc_vpc_ipv4_netmask_length                  = null,
+    myVpcs_vpc_vpc_ipv6_ipam_pool_id                    = null,
+    myVpcs_vpc_vpc_ipv6_cidr_block                      = null,
+    myVpcs_vpc_vpc_ipv6_netmask_length                  = null,
+    myVpcs_vpc_vpc_ipv6_cidr_block_network_border_group = null,
+    myVpcs_vpc_vpc_enable_dns_support                   = true,
+    myVpcs_vpc_vpc_enable_network_address_usage_metrics = null,
+    myVpcs_vpc_vpc_enable_dns_hostnames                 = true,
+    myVpcs_vpc_vpc_assign_generated_ipv6_cidr_block     = null,
+    myVpcs_vpc_vpc_tags                                 = { Name = "myVpc2" }
   }
 }
 
@@ -566,6 +581,14 @@ myRouteTables_route_table_settings = {
     myRouteTables_route_table_route_table_tags             = { Name = "myRouteTable3" }
     myRouteTables_route_table_route_table_propagating_vgws = null
   },
+  route_table_4 = {
+    myRouteTables_is_new_route_table                       = true,
+    myRouteTables_new_route_table_id                       = "vpc_2",
+    myRouteTables_existing_route_table_id                  = null,
+    myRouteTables_route_table_route_table_route            = [],
+    myRouteTables_route_table_route_table_tags             = { Name = "myRouteTable4" }
+    myRouteTables_route_table_route_table_propagating_vgws = null
+  },
 }
 
 myInternetGateways_internet_gateway_settings = {
@@ -574,6 +597,12 @@ myInternetGateways_internet_gateway_settings = {
     myInternetGateways_new_vpc_id                             = "vpc_1",
     myInternetGateways_existing_vpc_id                        = null,
     myInternetGateways_internet_gateway_internet_gateway_tags = { Name = "myInternetGateway1" }
+  },
+  internet_gateway_2 = {
+    myInternetGateways_is_new_vpc                             = true,
+    myInternetGateways_new_vpc_id                             = "vpc_2",
+    myInternetGateways_existing_vpc_id                        = null,
+    myInternetGateways_internet_gateway_internet_gateway_tags = { Name = "myInternetGateway2" }
   }
 }
 
@@ -637,6 +666,23 @@ myRoutes_route_settings = {
     myRoutes_route_route_vpc_endpoint_id             = null
     myRoutes_route_route_vpc_peering_connection_id   = null
   },
+  route_3 = {
+    myRoutes_route_route_route_table_id              = "route_table_4"
+    myRoutes_route_route_destination_cidr_block      = "0.0.0.0/0"
+    myRoutes_route_route_destination_ipv6_cidr_block = null
+    myRoutes_route_route_destination_prefix_list_id  = null
+    myRoutes_route_route_carrier_gateway_id          = null
+    myRoutes_route_route_core_network_arn            = null
+    myRoutes_route_route_egress_only_gateway_id      = null
+    myRoutes_route_route_gateway_id                  = "internet_gateway_2"
+    myRoutes_route_route_nat_gateway_id              = null
+    myRoutes_route_route_local_gateway_id            = null
+    myRoutes_route_route_network_interface_id        = null
+    myRoutes_route_route_transit_gateway_id          = null
+    myRoutes_route_route_vpc_endpoint_id             = null
+    myRoutes_route_route_vpc_peering_connection_id   = null
+  },
+
 }
 
 mySubnets_subnet_settings = {
@@ -719,6 +765,26 @@ mySubnets_subnet_settings = {
     mySubnets_subnet_subnet_private_dns_hostname_type_on_launch            = null,
     mySubnets_subnet_subnet_tags                                           = { Name = "mySubnet4" },
     mySubnets_subnet_route_table_association_route_table_id                = "route_table_3"
+  },
+  subnet_5 = {
+    mySubnets_subnet_subnet_vpc_id                                         = "vpc_2",
+    mySubnets_subnet_subnet_assign_ipv6_address_on_creation                = null,
+    mySubnets_subnet_subnet_availability_zone                              = "ap-northeast-1a",
+    mySubnets_subnet_subnet_availability_zone_id                           = null,
+    mySubnets_subnet_subnet_cidr_block                                     = "10.192.0.0/24",
+    mySubnets_subnet_subnet_customer_owned_ipv4_pool                       = null,
+    mySubnets_subnet_subnet_enable_dns64                                   = null,
+    mySubnets_subnet_subnet_enable_lni_at_device_index                     = null,
+    mySubnets_subnet_subnet_enable_resource_name_dns_aaaa_record_on_launch = null,
+    mySubnets_subnet_subnet_enable_resource_name_dns_a_record_on_launch    = null,
+    mySubnets_subnet_subnet_ipv6_cidr_block                                = null,
+    mySubnets_subnet_subnet_ipv6_native                                    = null,
+    mySubnets_subnet_subnet_map_customer_owned_ip_on_launch                = null,
+    mySubnets_subnet_subnet_map_public_ip_on_launch                        = null,
+    mySubnets_subnet_subnet_outpost_arn                                    = null,
+    mySubnets_subnet_subnet_private_dns_hostname_type_on_launch            = null,
+    mySubnets_subnet_subnet_tags                                           = { Name = "mySubnet5" },
+    mySubnets_subnet_route_table_association_route_table_id                = "route_table_4"
   }
 }
 
@@ -751,6 +817,16 @@ mySecurityGroups_security_group_settings = {
     mySecurityGroups_security_group_security_group_revoke_rules_on_delete = null
     mySecurityGroups_security_group_security_group_tags                   = { Name = "mySecurityGroup2" },
     mySecurityGroups_security_group_security_group_vpc_id                 = "vpc_1"
+  },
+  security_group_3 = {
+    mySecurityGroups_security_group_security_group_description            = null
+    mySecurityGroups_security_group_security_group_egress                 = []
+    mySecurityGroups_security_group_security_group_ingress                = []
+    mySecurityGroups_security_group_security_group_name_prefix            = null
+    mySecurityGroups_security_group_security_group_name                   = null
+    mySecurityGroups_security_group_security_group_revoke_rules_on_delete = null
+    mySecurityGroups_security_group_security_group_tags                   = { Name = "mySecurityGroup3" },
+    mySecurityGroups_security_group_security_group_vpc_id                 = "vpc_2"
   }
 }
 
@@ -848,7 +924,7 @@ myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_settings = {
     myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_ip_protocol                  = "TCP"
     myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_prefix_list_id               = null
     myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_referenced_security_group_id = null
-    myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_tags                         = { Name = "myVpcSecurityGroupEgressRule6" }
+    myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_tags                         = { Name = "myVpcSecurityGroupEgressRule8" }
     myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_to_port                      = 443
   },
   vpc_security_group_egress_rule_9 = {
@@ -860,8 +936,20 @@ myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_settings = {
     myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_ip_protocol                  = "TCP"
     myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_prefix_list_id               = null
     myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_referenced_security_group_id = null
-    myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_tags                         = { Name = "myVpcSecurityGroupEgressRule7" }
+    myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_tags                         = { Name = "myVpcSecurityGroupEgressRule9" }
     myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_to_port                      = 6666
+  },
+  vpc_security_group_egress_rule_10 = {
+    myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_security_group_id            = "security_group_3"
+    myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_cidr_ipv4                    = "10.192.0.0/16"
+    myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_cidr_ipv6                    = null
+    myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_description                  = null
+    myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_from_port                    = 443
+    myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_ip_protocol                  = "TCP"
+    myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_prefix_list_id               = null
+    myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_referenced_security_group_id = null
+    myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_tags                         = { Name = "myVpcSecurityGroupEgressRule10" }
+    myVpcSecurityGroupEgressRules_vpc_security_group_egress_rule_vpc_security_group_egress_rule_to_port                      = 443
   },
 }
 
@@ -938,6 +1026,18 @@ myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_settings = {
     myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_referenced_security_group_id = null
     myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_tags                         = { Name = "myVpcSecurityGroupIngressRule6" }
     myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_to_port                      = 6666
+  },
+  vpc_security_group_ingress_rule_7 = {
+    myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_security_group_id            = "security_group_3"
+    myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_cidr_ipv4                    = "10.192.0.0/16"
+    myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_cidr_ipv6                    = null
+    myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_description                  = null
+    myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_from_port                    = 443
+    myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_ip_protocol                  = "TCP"
+    myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_prefix_list_id               = null
+    myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_referenced_security_group_id = null
+    myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_tags                         = { Name = "myVpcSecurityGroupIngressRule7" }
+    myVpcSecurityGroupIngressRules_vpc_security_group_ingress_rule_vpc_security_group_ingress_rule_to_port                      = 443
   }
 }
 
@@ -984,7 +1084,7 @@ myVpcEndpoints_vpc_endpoint_settings = {
     myVpcEndpoints_vpc_endpoint_vpc_endpoint_tags                = { Name = "myVpcEndpoint3" }
     myVpcEndpoints_vpc_endpoint_vpc_endpoint_vpc_endpoint_type   = "Interface"
   },
-  vpc_endpoint_4 = {
+  /*  vpc_endpoint_4 = {
     myVpcEndpoints_vpc_endpoint_vpc_endpoint_service_name        = "com.amazonaws.vpce.ap-northeast-1.vpce-svc-02691fd610d24fd64"
     myVpcEndpoints_vpc_endpoint_vpc_endpoint_vpc_id              = "vpc_1"
     myVpcEndpoints_vpc_endpoint_vpc_endpoint_auto_accept         = null
@@ -1011,11 +1111,25 @@ myVpcEndpoints_vpc_endpoint_settings = {
     myVpcEndpoints_vpc_endpoint_vpc_endpoint_security_group_ids  = ["security_group_2"]
     myVpcEndpoints_vpc_endpoint_vpc_endpoint_tags                = { Name = "myVpcEndpoint5" }
     myVpcEndpoints_vpc_endpoint_vpc_endpoint_vpc_endpoint_type   = "Interface"
+  },*/
+  vpc_endpoint_6 = {
+    myVpcEndpoints_vpc_endpoint_vpc_endpoint_service_name        = "com.amazonaws.vpce.ap-northeast-1.vpce-svc-02691fd610d24fd64"
+    myVpcEndpoints_vpc_endpoint_vpc_endpoint_vpc_id              = "vpc_2"
+    myVpcEndpoints_vpc_endpoint_vpc_endpoint_auto_accept         = null
+    myVpcEndpoints_vpc_endpoint_vpc_endpoint_policy              = null
+    myVpcEndpoints_vpc_endpoint_vpc_endpoint_private_dns_enabled = false
+    myVpcEndpoints_vpc_endpoint_vpc_endpoint_dns_options         = []
+    myVpcEndpoints_vpc_endpoint_vpc_endpoint_ip_address_type     = null
+    myVpcEndpoints_vpc_endpoint_vpc_endpoint_route_table_ids     = []
+    myVpcEndpoints_vpc_endpoint_vpc_endpoint_subnet_ids          = ["subnet_5"]
+    myVpcEndpoints_vpc_endpoint_vpc_endpoint_security_group_ids  = ["security_group_3"]
+    myVpcEndpoints_vpc_endpoint_vpc_endpoint_tags                = { Name = "myVpcEndpoint6" }
+    myVpcEndpoints_vpc_endpoint_vpc_endpoint_vpc_endpoint_type   = "Interface"
   },
 }
 
 myMwsVpcEndpoints_mws_vpc_endpoint_settings = {
-  mws_vpc_endpoint_1 = {
+  /*  mws_vpc_endpoint_1 = {
     myMwsVpcEndpoints_mws_vpc_endpoint_mws_vpc_endpoint_vpc_endpoint_name   = "myMwsVpcEndpoints1"
     myMwsVpcEndpoints_mws_vpc_endpoint_mws_vpc_endpoint_aws_vpc_endpoint_id = "vpc_endpoint_4"
     myMwsVpcEndpoints_mws_vpc_endpoint_mws_vpc_endpoint_region              = "ap-northeast-1"
@@ -1023,6 +1137,11 @@ myMwsVpcEndpoints_mws_vpc_endpoint_settings = {
   mws_vpc_endpoint_2 = {
     myMwsVpcEndpoints_mws_vpc_endpoint_mws_vpc_endpoint_vpc_endpoint_name   = "myMwsVpcEndpoints2"
     myMwsVpcEndpoints_mws_vpc_endpoint_mws_vpc_endpoint_aws_vpc_endpoint_id = "vpc_endpoint_5"
+    myMwsVpcEndpoints_mws_vpc_endpoint_mws_vpc_endpoint_region              = "ap-northeast-1"
+  },*/
+  mws_vpc_endpoint_3 = {
+    myMwsVpcEndpoints_mws_vpc_endpoint_mws_vpc_endpoint_vpc_endpoint_name   = "myMwsVpcEndpoints3"
+    myMwsVpcEndpoints_mws_vpc_endpoint_mws_vpc_endpoint_aws_vpc_endpoint_id = "vpc_endpoint_6"
     myMwsVpcEndpoints_mws_vpc_endpoint_mws_vpc_endpoint_region              = "ap-northeast-1"
   }
 }
@@ -1043,10 +1162,10 @@ myMwsNetworks_mws_networks_settings = {
     myMwsNetworks_mws_networks_mws_networks_vpc_id             = "vpc_1"
     myMwsNetworks_mws_networks_mws_networks_subnet_ids         = ["subnet_2", "subnet_3"]
     myMwsNetworks_mws_networks_mws_networks_security_group_ids = ["security_group_1"]
-    myMwsNetworks_mws_networks_mws_networks_vpc_endpoints = [{
+    myMwsNetworks_mws_networks_mws_networks_vpc_endpoints      = null /*[{
       mws_networks_vpc_endpoints_dataplane_relay = ["mws_vpc_endpoint_2"]
       mws_networks_vpc_endpoints_rest_api        = ["mws_vpc_endpoint_1"]
-    }]
+    }]*/
   }
 }
 
@@ -1129,5 +1248,13 @@ myMetastores_metastore_settings = {
     myMetastores_metastore_metastore_delta_sharing_recipient_token_lifetime_in_seconds = null
     myMetastores_metastore_metastore_delta_sharing_organization_name                   = null
     myMetastores_metastore_metastore_force_destroy                                     = true
+  }
+}
+
+myMetastoreAssignments_metastore_assigment_settings = {
+  metastore_assignment_settings = {
+    myMetastoreAssignments_metastore_assignment_metastore_assignment_metastore_id         = "metastore_1"
+    myMetastoreAssignments_metastore_assignment_metastore_assignment_workspace_id         = "mws_workspaces_1"
+    myMetastoreAssignments_metastore_assignment_metastore_assignment_default_catalog_name = null
   }
 }

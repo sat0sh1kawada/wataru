@@ -523,3 +523,5 @@ variable "myMetastores_metastore_settings" {
     myMetastores_metastore_metastore_force_destroy                                     = bool
   }))
 }
+
+variable "myMetastoreAssignments_metastore_assigment_settings" {}
